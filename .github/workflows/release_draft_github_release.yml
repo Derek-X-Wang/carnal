@@ -69,7 +69,7 @@ jobs:
       - name: Clone Flutter repository with master channel
         uses: subosito/flutter-action@48cafc24713cca54bbe03cdc3a423187d413aafa
         with:
-          channel: master
+          channel: stable
 
       - name: Install Linux dependencies
         if: matrix.target == 'Linux'
