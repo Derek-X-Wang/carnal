@@ -18,7 +18,7 @@ class HiveFolder extends HiveObject {
   @HiveField(4)
   String? summary;
 
-  @HiveField(11)
+  @HiveField(5)
   String status;
 
   HiveFolder({

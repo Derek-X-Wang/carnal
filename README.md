@@ -25,3 +25,26 @@ A watcher makes our source code generation process more convenient. It watches c
 
 It is safe to start the watcher once and leave it running in the background.
 
+## macOS
+App Sandbox disabled.
+
+Sample logs
+```
+flutter: remove /Users/derekxwang/Downloads/buildspace-os-main/README.md
+flutter: modify /Users/derekxwang/Downloads/buildspace-os-main/.DS_Store
+# delete assets
+flutter: remove /Users/derekxwang/Downloads/buildspace-os-main/assets/48.png
+flutter: remove /Users/derekxwang/Downloads/buildspace-os-main/assets/128.png
+flutter: remove /Users/derekxwang/Downloads/buildspace-os-main/assets/buildspace-logo.png
+flutter: modify /Users/derekxwang/Downloads/buildspace-os-main/.DS_Store
+# add assets
+flutter: add /Users/derekxwang/Downloads/buildspace-os-main/assets/48.png
+flutter: add /Users/derekxwang/Downloads/buildspace-os-main/assets/128.png
+flutter: add /Users/derekxwang/Downloads/buildspace-os-main/assets/buildspace-logo.png
+flutter: modify /Users/derekxwang/Downloads/buildspace-os-main/.DS_Store
+```
+
+## Next steps
+- [ ] Add file_selector
+- [ ] Scan all for the first time
+- [ ] Check change from db records

@@ -7,14 +7,38 @@ enum AppStatus {
   errored,
 }
 
+// Need ignore rule
+// Need progress tracking
+@JsonSerializable(explicitToJson: true)
+class WatcherItem {
+  final String src;
+  bool canRead;
+  bool canWrite;
+
+  WatcherItem(this.src, {this.canRead = true, this.canWrite = false});
+
+  factory WatcherItem.fromJson(Map<String, dynamic> json) =>
+      _$WatcherItemFromJson(json);
+  Map<String, dynamic> toJson() => _$WatcherItemToJson(this);
+}
+
 @JsonSerializable(explicitToJson: true)
 class AppState extends Equatable {
   final ThemeMode themeMode = ThemeMode.system;
+  final List<WatcherItem> items;
 
-  const AppState();
+  const AppState({
+    required this.items,
+  });
+
+  AppState copyWith({List<WatcherItem>? items}) {
+    return AppState(
+      items: items ?? this.items,
+    );
+  }
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [items];
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
       _$AppStateFromJson(json);

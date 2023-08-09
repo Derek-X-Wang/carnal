@@ -18,13 +18,13 @@ class HiveFile extends HiveObject {
   @HiveField(4)
   String? text;
 
-  @HiveField(4)
+  @HiveField(5)
   String? summary;
 
-  @HiveField(8)
+  @HiveField(6)
   double progress;
 
-  @HiveField(11)
+  @HiveField(7)
   String status;
 
   HiveFile({

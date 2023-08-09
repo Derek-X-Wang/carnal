@@ -28,5 +28,9 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>We need access to your documents to watch for changes and parse files.</string>
+	<key>NSFileProviderDomainUsageDescription</key>
+	<string>We need access to files to watch for changes and parse files.</string>
 </dict>
 </plist>
