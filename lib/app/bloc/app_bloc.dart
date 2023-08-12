@@ -9,6 +9,7 @@ import 'package:watcher/watcher.dart';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:carnal/utils/path.dart';
+import 'package:carnal/utils/tree/tree_node.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
@@ -39,6 +40,8 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
     on<WatchFileChanged>(_mapWatchFileChanged);
 
     // _userSubscription = _authenticationRepository.user.listen(_onUserChanged);
+    // recreate watcher and subscriptions for each item
+    _syncWatcherItems(state.items);
   }
 
   @override
@@ -94,32 +97,8 @@ extension WatchEvents on AppBloc {
   void _mapWatcherItemsChanged(
       WatcherItemsChanged event, Emitter<AppState> emit) {
     // for each item, create a watcher if it doesn't exist
-    final items = event.items.where((e) => isLocalPathSync(e.src)).toList();
-
-    // Remove watchers and subscriptions for items no longer being watched
-    final currentKeys = _watchers.keys.toList();
-    for (final key in currentKeys) {
-      if (items.every((item) => item.src != key)) {
-        _watcherSubscriptions[key]?.cancel();
-        _watchers.remove(key);
-        _watcherSubscriptions.remove(key);
-      }
-    }
-
-    // Update existing watchers if necessary
-
-    // Create new watchers and subscriptions for items not yet being watched
-    for (final item in items) {
-      if (!_watchers.containsKey(item.src)) {
-        final watcher = Watcher(item.src);
-        final subscription = watcher.events.listen((event) {
-          add(WatchFileChanged(item, event));
-        });
-        _watchers[item.src] = watcher;
-        _watcherSubscriptions[item.src] = subscription;
-      }
-    }
-    emit(state.copyWith(items: event.items));
+    final items = _syncWatcherItems(event.items);
+    emit(state.copyWith(items: items));
   }
 
   void _mapWatcherItemAdded(WatcherItemAdded event, Emitter<AppState> emit) {
@@ -156,4 +135,34 @@ extension Helpers on AppBloc {
   //   await taskProgressCheck(dispatchments);
   //   return state;
   // }
+
+  List<WatcherItem> _syncWatcherItems(List<WatcherItem> watcherItems) {
+    final items = watcherItems.where((e) => isLocalPathSync(e.src)).toList();
+
+    // Remove watchers and subscriptions for items no longer being watched
+    final currentKeys = _watchers.keys.toList();
+    for (final key in currentKeys) {
+      if (items.every((item) => item.src != key)) {
+        _watcherSubscriptions[key]?.cancel();
+        _watchers.remove(key);
+        _watcherSubscriptions.remove(key);
+      }
+    }
+
+    // Update existing watchers if necessary
+
+    // Create new watchers and subscriptions for items not yet being watched
+    for (final item in items) {
+      if (!_watchers.containsKey(item.src)) {
+        final watcher = Watcher(item.src);
+        final subscription = watcher.events.listen((event) {
+          add(WatchFileChanged(item, event));
+        });
+        _watchers[item.src] = watcher;
+        _watcherSubscriptions[item.src] = subscription;
+      }
+    }
+
+    return items;
+  }
 }

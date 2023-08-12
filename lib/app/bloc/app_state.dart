@@ -14,13 +14,28 @@ class WatcherItem {
   final String src;
   bool canRead;
   bool canWrite;
+  TreeNode? tree;
 
-  WatcherItem(this.src, {this.canRead = true, this.canWrite = false});
+  WatcherItem(this.src,
+      {this.canRead = true, this.canWrite = false, this.tree});
 
   factory WatcherItem.fromJson(Map<String, dynamic> json) =>
       _$WatcherItemFromJson(json);
   Map<String, dynamic> toJson() => _$WatcherItemToJson(this);
 }
+
+// @JsonSerializable(explicitToJson: true)
+// class UserProfile {
+//   final String src;
+//   bool canRead;
+//   bool canWrite;
+
+//   WatcherItem(this.src, {this.canRead = true, this.canWrite = false});
+
+//   factory WatcherItem.fromJson(Map<String, dynamic> json) =>
+//       _$WatcherItemFromJson(json);
+//   Map<String, dynamic> toJson() => _$WatcherItemToJson(this);
+// }
 
 @JsonSerializable(explicitToJson: true)
 class AppState extends Equatable {

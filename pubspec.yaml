@@ -59,6 +59,11 @@ dependencies:
   stream_channel: ^2.1.1
   flutter_local_notifications: ^15.1.0+1
   windows_notification: ^0.0.3
+  file_selector: ^1.0.0
+  flutter_speed_dial: ^7.0.0
+  glob: ^2.1.2
+  crypto: ^3.0.3
+  path: ^1.8.3
 
 dev_dependencies:
   flutter_test:

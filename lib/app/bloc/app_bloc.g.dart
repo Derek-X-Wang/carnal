@@ -10,6 +10,9 @@ WatcherItem _$WatcherItemFromJson(Map<String, dynamic> json) => WatcherItem(
       json['src'] as String,
       canRead: json['canRead'] as bool? ?? true,
       canWrite: json['canWrite'] as bool? ?? false,
+      tree: json['tree'] == null
+          ? null
+          : TreeNode.fromJson(json['tree'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$WatcherItemToJson(WatcherItem instance) =>
@@ -17,6 +20,7 @@ Map<String, dynamic> _$WatcherItemToJson(WatcherItem instance) =>
       'src': instance.src,
       'canRead': instance.canRead,
       'canWrite': instance.canWrite,
+      'tree': instance.tree?.toJson(),
     };
 
 AppState _$AppStateFromJson(Map<String, dynamic> json) => AppState(

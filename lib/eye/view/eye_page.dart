@@ -1,7 +1,10 @@
 import 'package:carnal/eye/eye.dart';
+import 'package:carnal/utils/tree/tree.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carnal/app/app.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class EyePage extends StatelessWidget {
   const EyePage({
@@ -31,6 +34,7 @@ class EyeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final appBloc = BlocProvider.of<AppBloc>(context);
     final bloc = BlocProvider.of<EyeBloc>(context);
+    final scaffoldManager = ScaffoldMessenger.of(context);
 
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
@@ -105,6 +109,13 @@ class EyeView extends StatelessWidget {
                         ),
                         const Text('Write'),
                         IconButton(
+                          icon: const Icon(Icons.track_changes),
+                          onPressed: () async {
+                            final tree = await buildTree(item.src, []);
+                            printTree(tree, "");
+                          },
+                        ),
+                        IconButton(
                           icon: const Icon(Icons.delete),
                           onPressed: () {
                             appBloc.add(WatcherItemRemoved(item));
@@ -115,25 +126,104 @@ class EyeView extends StatelessWidget {
                   );
                 },
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                child: TextField(
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Enter file or URL',
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  appBloc.add(WatcherItemAdded(WatcherItem(_controller.text)));
-                  _controller.clear();
-                },
-                child: Text('Add Item'),
-              )
             ],
           ),
+          floatingActionButton: SpeedDial(
+            icon: Icons.add,
+            activeIcon: Icons.close,
+            spacing: 3,
+            childPadding: const EdgeInsets.all(5),
+            children: [
+              SpeedDialChild(
+                child: const Icon(Icons.input),
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+                label: 'Enter path',
+                onTap: () async {
+                  String? path = await _showTextInputDialog(context);
+                  _addWatcherPath(appBloc, scaffoldManager, path);
+                },
+              ),
+              SpeedDialChild(
+                child: const Icon(Icons.file_open),
+                backgroundColor: Colors.deepOrange,
+                foregroundColor: Colors.white,
+                label: 'Select file',
+                onTap: () async {
+                  final file = await openFile();
+                  _addWatcherPath(appBloc, scaffoldManager, file?.path);
+                },
+              ),
+              SpeedDialChild(
+                child: const Icon(Icons.file_copy),
+                backgroundColor: Colors.indigo,
+                foregroundColor: Colors.white,
+                label: 'Select files',
+                visible: true,
+                onTap: () async {
+                  final files = await openFiles();
+                  for (final file in files) {
+                    _addWatcherPath(appBloc, scaffoldManager, file.path);
+                  }
+                },
+              ),
+              SpeedDialChild(
+                child: const Icon(Icons.folder_open),
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                label: 'Select folder',
+                visible: true,
+                onTap: () async {
+                  final String? path = await getDirectoryPath();
+                  _addWatcherPath(appBloc, scaffoldManager, path);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _addWatcherPath(
+      AppBloc bloc, ScaffoldMessengerState scaffoldManager, String? path) {
+    if (path == null) {
+      return;
+    }
+    bloc.add(WatcherItemAdded(WatcherItem(path)));
+    scaffoldManager.showSnackBar(SnackBar(
+      content: Text("Successfully added $path"),
+    ));
+  }
+
+  Future<String?> _showTextInputDialog(BuildContext context) async {
+    String inputValue = '';
+
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Enter path or URL'),
+          content: TextField(
+            onChanged: (value) {
+              inputValue = value;
+            },
+            decoration: InputDecoration(hintText: 'Please enter path'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(inputValue);
+              },
+              child: Text('OK'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(null);
+              },
+              child: Text('Cancel'),
+            ),
+          ],
         );
       },
     );

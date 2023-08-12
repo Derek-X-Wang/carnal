@@ -45,6 +45,6 @@ flutter: modify /Users/derekxwang/Downloads/buildspace-os-main/.DS_Store
 ```
 
 ## Next steps
-- [ ] Add file_selector
 - [ ] Scan all for the first time
+- [ ] ignore list and matching
 - [ ] Check change from db records

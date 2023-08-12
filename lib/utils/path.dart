@@ -45,3 +45,69 @@ Future<PathKind> checkPathKind(String path) async {
   }
   return PathKind.unknown;
 }
+
+List<String> getAllFilePaths(String folderPath) {
+  var dir = Directory(folderPath);
+  List<String> filePaths = [];
+
+  try {
+    List<FileSystemEntity> entities = dir.listSync(recursive: true);
+    for (FileSystemEntity entity in entities) {
+      if (entity is File) {
+        filePaths.add(entity.path);
+      }
+    }
+  } catch (e) {
+    print('Error reading directory: $e');
+  }
+
+  return filePaths;
+}
+
+// void printTree(String directoryPath, [String prefix = '']) {
+//   final dir = Directory(directoryPath);
+
+//   try {
+//     final list = dir.listSync();
+//     for (var i = 0; i < list.length; i++) {
+//       final FileSystemEntity entity = list[i];
+//       final isLast = i == list.length - 1;
+//       print(
+//           '$prefix${isLast ? '└── ' : '├── '}${entity.uri.pathSegments.last}');
+//       if (entity is Directory) {
+//         printTree(entity.path, '$prefix${isLast ? '    ' : '│   '}');
+//       }
+//     }
+//   } catch (e) {
+//     print('Error reading directory: $e');
+//   }
+// }
+
+// String buildTree(String directoryPath, [String prefix = '']) {
+//   final dir = Directory(directoryPath);
+//   var buffer = StringBuffer();
+
+//   try {
+//     final list = dir.listSync();
+//     for (var i = 0; i < list.length; i++) {
+//       final FileSystemEntity entity = list[i];
+//       final isLast = i == list.length - 1;
+//       buffer.writeln(
+//           '$prefix${isLast ? '└── ' : '├── '}${entity.uri.pathSegments.last}');
+//       if (entity is Directory) {
+//         buffer.write(
+//             buildTree(entity.path, '$prefix${isLast ? '    ' : '│   '}'));
+//       }
+//     }
+//   } catch (e) {
+//     print('Error reading directory: $e');
+//   }
+
+//   return buffer.toString();
+// }
+
+// void writeTree(String directoryPath, String filePath) {
+//   final file = File(filePath);
+//   final tree = buildTree(directoryPath);
+//   file.writeAsStringSync(tree);
+// }
