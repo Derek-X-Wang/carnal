@@ -48,3 +48,4 @@ flutter: modify /Users/derekxwang/Downloads/buildspace-os-main/.DS_Store
 - [ ] LLM assisted search
 - [ ] Refactor Globs matching logic for ignored files
 - [ ] System tray
+- [ ] Shift+Enter for new line when chatting

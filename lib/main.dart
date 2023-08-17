@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:agent_repository/agent_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:authentication_repository/authentication_repository.dart';
@@ -23,7 +24,10 @@ void main() async {
   //   user = await authenticationRepository.user.first;
   // }
   // print("on start user ${user.isEmpty} $user");
+  final agentRepository = AgentRepository();
   final router = AppRouter();
   runApp(App(
-      authenticationRepository: authenticationRepository, appRouter: router));
+      authenticationRepository: authenticationRepository,
+      agentRepository: agentRepository,
+      appRouter: router));
 }

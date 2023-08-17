@@ -1,3 +1,4 @@
+import 'package:agent_repository/agent_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,13 +10,16 @@ import 'package:carnal/theme.dart';
 
 class App extends StatelessWidget {
   final AuthenticationRepository _authenticationRepository;
+  final AgentRepository _agentRepository;
   final AppRouter _appRouter;
 
   const App({
     Key? key,
     required AuthenticationRepository authenticationRepository,
+    required AgentRepository agentRepository,
     required AppRouter appRouter,
   })  : _authenticationRepository = authenticationRepository,
+        _agentRepository = agentRepository,
         _appRouter = appRouter,
         super(key: key);
 
@@ -26,8 +30,8 @@ class App extends StatelessWidget {
       providers: [
         RepositoryProvider<AuthenticationRepository>(
             create: (context) => _authenticationRepository),
-        // RepositoryProvider<ProfilesRepository>(
-        //     create: (context) => FirebaseProfilesRepository()),
+        RepositoryProvider<AgentRepository>(
+            create: (context) => _agentRepository),
         RepositoryProvider<AppRouter>(create: (context) => _appRouter),
       ],
       child: MultiBlocProvider(

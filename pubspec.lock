@@ -9,6 +9,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "61.0.0"
+  agent_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/agent_repository"
+      relative: true
+    source: path
+    version: "0.1.0"
   analyzer:
     dependency: transitive
     description:
@@ -785,18 +792,18 @@ packages:
     dependency: "direct main"
     description:
       name: langchain
-      sha256: b30596124747cf8a385d56a30127b0dc60b6509199e8de5faebe9a65bf31ac6b
+      sha256: "243eb33599ce27a010650aecd925288eaf5e3705449c8ad5d09e383b806da99e"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.5+1"
+    version: "0.0.7+1"
   langchain_openai:
     dependency: "direct main"
     description:
       name: langchain_openai
-      sha256: "5674abc7ecd8ead31984b255885cbd139ed4a54c78146e03a7fd0490e5640523"
+      sha256: cce472c8bba4fabae11a2b800f78ccbeed45fd41b1ac7f3f9d349c24c0a15b4e
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.5+1"
+    version: "0.0.7+1"
   lints:
     dependency: transitive
     description:

@@ -1,3 +1,4 @@
+import 'package:agent_repository/agent_repository.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -18,7 +19,9 @@ class MouthPage extends StatelessWidget {
     // final user = context.select((AppBloc bloc) => bloc.state.user);
     return Material(
       child: BlocProvider(
-        create: (context) => MouthBloc(),
+        create: (context) => MouthBloc(
+          agentRepository: RepositoryProvider.of<AgentRepository>(context),
+        ),
         child: MouthView(),
       ),
     );

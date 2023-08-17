@@ -11,7 +11,6 @@ import 'package:watcher/watcher.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:carnal/utils/path.dart';
 import 'package:carnal/utils/tree/tree_node.dart';
-import 'package:carnal/utils/agent/agent.dart' as llmAgent;
 
 part 'app_event.dart';
 part 'app_state.dart';
@@ -22,7 +21,6 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
   late final StreamSubscription<User> _userSubscription;
   final Map<String, Watcher> _watchers = {};
   final Map<String, StreamSubscription> _watcherSubscriptions = {};
-  late final OpenAIFunctionsAgent agent;
 
   void _onUserChanged(User user) => add(AppUserChanged(user));
 
@@ -45,7 +43,6 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
     // _userSubscription = _authenticationRepository.user.listen(_onUserChanged);
     // recreate watcher and subscriptions for each item
     _syncWatcherItems(state.items);
-    agent = llmAgent.agent;
   }
 
   @override
