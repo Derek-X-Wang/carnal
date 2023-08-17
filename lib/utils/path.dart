@@ -64,6 +64,10 @@ List<String> getAllFilePaths(String folderPath) {
   return filePaths;
 }
 
+Future<bool> isValidPath(String path) async {
+  return await File(path).exists() || await Directory(path).exists();
+}
+
 // void printTree(String directoryPath, [String prefix = '']) {
 //   final dir = Directory(directoryPath);
 

@@ -1,13 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:carnal/eye/eye.dart' as eye;
-
-final GoRouter router = GoRouter(
-  initialLocation: '/eye',
-  routes: <RouteBase>[
-    eye.route,
-  ],
-);
+import 'package:carnal/mouth/mouth.dart' as mouth;
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -18,6 +12,7 @@ class AppRouter {
     navigatorKey: _rootNavigatorKey,
     routes: <RouteBase>[
       eye.route,
+      mouth.route,
     ],
     // errorBuilder: (context, state) => const NotFoundScreen(),
   );

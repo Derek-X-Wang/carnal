@@ -1,47 +1,47 @@
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:carnal/app/app.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
-import 'package:carnal/eye/eye.dart';
+import 'package:carnal/app/app.dart';
+import 'package:carnal/Hand/Hand.dart';
 import 'package:carnal/utils/tree/tree.dart';
 
-class EyePage extends StatelessWidget {
-  const EyePage({
+class HandPage extends StatelessWidget {
+  const HandPage({
     Key? key,
   }) : super(key: key);
 
-  static Page page() => const MaterialPage<void>(child: EyePage());
+  static Page page() => const MaterialPage<void>(child: HandPage());
 
   @override
   Widget build(BuildContext context) {
     // final user = context.select((AppBloc bloc) => bloc.state.user);
     return Material(
       child: BlocProvider(
-        create: (context) => EyeBloc(),
-        child: EyeView(),
+        create: (context) => HandBloc(),
+        child: HandView(),
       ),
     );
   }
 }
 
-class EyeView extends StatelessWidget {
+class HandView extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
 
-  EyeView({super.key});
+  HandView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final appBloc = BlocProvider.of<AppBloc>(context);
-    final bloc = BlocProvider.of<EyeBloc>(context);
+    final bloc = BlocProvider.of<HandBloc>(context);
     final scaffoldManager = ScaffoldMessenger.of(context);
 
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Eye'),
+            title: const Text('Hand'),
           ),
           drawer: Drawer(
             child: ListView(
@@ -56,14 +56,14 @@ class EyeView extends StatelessWidget {
                 ListTile(
                   title: Text('Eye'),
                   onTap: () {
-                    // Handle navigation or any action related to the eye
+                    // Handle navigation or any action related to the Hand
                     context.go('/eye');
                   },
                 ),
                 ListTile(
                   title: Text('Mouth'),
                   onTap: () {
-                    // Handle navigation or any action related to the mouth
+                    // Handle navigation or any action related to the Hand
                     context.go('/mouth');
                   },
                 ),

@@ -5,10 +5,12 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'app/app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await Hive.initFlutter();
   final Directory dir = await getApplicationDocumentsDirectory();
   HydratedBloc.storage = await HydratedStorage.build(storageDirectory: dir);

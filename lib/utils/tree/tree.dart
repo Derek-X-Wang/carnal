@@ -7,16 +7,20 @@ import 'tree_node.dart';
 export 'tree_node.dart';
 export 'tools.dart';
 
+// skipIgnored: initially plan to include ignored files in the tree, but sometime the tree become too big, using this to skip ignored files
+// isIgnored: if the current directory is ignored
 Future<TreeNode> buildTree(String path, List<Glob> parentIgnores,
-    {bool isIgnored = false}) async {
+    {bool isIgnored = false, bool skipIgnored = true}) async {
   var dir = Directory(path);
   var children = <String, TreeNode>{};
   var gitIgnoreGlobs = await getGitIgnoreGlobs(path);
   var allIgnores = [...parentIgnores, ...gitIgnoreGlobs];
-  bool isAllChildrenIgnored = true; // Initialize as true
+  // current node is ignored if all children are ignored
+  bool isAllChildrenIgnored = true;
 
   await for (var entity in dir.list(followLinks: false)) {
     bool isEntityIgnored = isPathIgnored(entity.path, path, allIgnores);
+    if (isEntityIgnored && skipIgnored) continue;
     if (entity is File && !entity.path.endsWith('.gitignore')) {
       DateTime lastModified = await entity.lastModified();
       int size = await entity.length();
@@ -37,7 +41,6 @@ Future<TreeNode> buildTree(String path, List<Glob> parentIgnores,
     }
   }
 
-  // bool isDirectoryIgnored = isPathIgnored(path, allIgnores) || isAllChildrenIgnored; // If all children ignored, directory is ignored too
   return TreeNode(path,
       children: children, isIgnored: isIgnored || isAllChildrenIgnored);
 }
@@ -48,6 +51,13 @@ Future<List<Glob>> getGitIgnoreGlobs(String path) async {
     var lines = await gitIgnoreFile.readAsLines();
     return lines
         .where((line) => line.trim().isNotEmpty && !line.trim().startsWith('#'))
+        // Not sure why glob doesn't match **/, this is a patch
+        // TODO: Fix this
+        .map((line) => line.startsWith('/') ? line.substring(1) : line)
+        .map((line) => line.startsWith('**/') ? line.substring(3) : line)
+        .map((line) =>
+            line.endsWith('/') ? line.substring(0, line.length - 1) : line)
+        .where((line) => line.trim().isNotEmpty)
         .map((pattern) => Glob(pattern))
         .toList();
   }
@@ -63,8 +73,15 @@ bool isPathIgnored(String path, String basePath, List<Glob> gitIgnoreGlobs) {
     relativePath = relativePath.substring(1);
   }
 
+  // Print debug info
+  print('Relative Path: $relativePath');
+
   // Match against the relative path
-  return gitIgnoreGlobs.any((glob) => glob.matches(relativePath));
+  return gitIgnoreGlobs.any((glob) {
+    print(
+        'Testing pattern: $relativePath against $glob result: ${glob.matches(relativePath)}');
+    return glob.matches(relativePath);
+  });
 }
 
 Future<String> generateHash(String path) async {
