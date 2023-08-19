@@ -5,9 +5,11 @@ import 'package:langchain/langchain.dart';
 final class DirectoryListTool extends Tool {
   DirectoryListTool()
       : super(
-            name: 'directory_list',
-            description: 'Useful for listing files in a directory. '
-                'The input to this tool should be a valid directory path.');
+          name: 'directory_list',
+          description: 'Useful for listing files in a directory. '
+              'The input to this tool should be a valid directory path.'
+              'The output of this tool is a string contain all files in the directory or has an error.',
+        );
 
   @override
   Future<String> runInternalString(final String toolInput) async {

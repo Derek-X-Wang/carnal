@@ -3,6 +3,7 @@
 
 import 'dart:async';
 import 'package:agent_repository/agent_repository.dart';
+import 'package:carnal/app/bloc/app_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -25,14 +26,18 @@ class MessageItem {
 }
 
 class MouthState extends Equatable {
+  final List<WatcherItem> watchers;
   final List<MessageItem> messages;
 
   const MouthState({
+    required this.watchers,
     required this.messages,
   });
 
-  MouthState copyWith({List<MessageItem>? messages}) {
+  MouthState copyWith(
+      {List<WatcherItem>? watchers, List<MessageItem>? messages}) {
     return MouthState(
+      watchers: watchers ?? this.watchers,
       messages: messages ?? this.messages,
     );
   }
@@ -66,8 +71,9 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
 
   MouthBloc({
     required AgentRepository agentRepository,
+    required List<WatcherItem> watchers,
   })  : _agentRepository = agentRepository,
-        super(const MouthState(messages: [])) {
+        super(MouthState(watchers: watchers, messages: const [])) {
     _timer = _toDayChangeTimer();
     on<MessageAdded>(_onMessageAdded);
   }
@@ -78,7 +84,9 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
     messages.add(event.message);
     emit(state.copyWith(messages: messages));
     final newMessages = List<MessageItem>.from(state.messages);
-    final res = await _agentRepository.execute(event.message.message);
+    final allowedPaths = state.watchers.map((watcher) => watcher.src).toList();
+    final res =
+        await _agentRepository.execute(event.message.message, allowedPaths);
     print("ai agent res: $res");
     newMessages.add(MessageItem(
         kind: UserKind.agent, message: res, dateTime: DateTime.now()));

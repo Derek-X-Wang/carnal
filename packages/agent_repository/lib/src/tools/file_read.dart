@@ -2,12 +2,13 @@ import 'dart:async';
 import 'dart:io';
 import 'package:langchain/langchain.dart';
 
-final class FileGetTool extends Tool {
-  FileGetTool()
+final class FileReadTool extends Tool {
+  FileReadTool()
       : super(
-          name: 'file_retriever',
-          description: 'Useful for getting the file. '
-              'The input to this tool should be a valid file path.',
+          name: 'file_read',
+          description: 'Useful for reading the file. '
+              'The input to this tool should be a valid file path.'
+              'The output to this tool should be the content of the file.',
         );
 
   @override

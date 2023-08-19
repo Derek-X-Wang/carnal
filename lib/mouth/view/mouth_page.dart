@@ -1,4 +1,5 @@
 import 'package:agent_repository/agent_repository.dart';
+import 'package:carnal/app/app.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -16,11 +17,12 @@ class MouthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final user = context.select((AppBloc bloc) => bloc.state.user);
+    final items = context.select((AppBloc bloc) => bloc.state.items);
     return Material(
       child: BlocProvider(
         create: (context) => MouthBloc(
           agentRepository: RepositoryProvider.of<AgentRepository>(context),
+          watchers: items,
         ),
         child: MouthView(),
       ),
