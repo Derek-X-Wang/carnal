@@ -19,10 +19,14 @@ final class FileCreateTool extends Tool {
 
       if (await file.exists()) {
         return "File already exists.";
-      } else {
-        await file.create();
-        return "File created successfully.";
       }
+      final directory = Directory(toolInput);
+      if (await directory.exists()) {
+        return "Directory already exists.";
+      }
+
+      await file.create();
+      return "File created successfully.";
     } catch (e) {
       return "An error occurred: ${e.toString()}";
     }

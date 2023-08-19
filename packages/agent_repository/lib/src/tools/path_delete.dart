@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:langchain/langchain.dart';
 
-final class DirectoryCreateTool extends Tool {
-  DirectoryCreateTool()
+final class PathDeleteTool extends Tool {
+  PathDeleteTool()
       : super(
-          name: 'directory_create',
-          description: 'Creates a new directory.'
-              'The input to this tool should be a valid directory path.'
+          name: 'path_delete',
+          description: 'Deletes a file or a directory.'
+              'The input to this tool should be a valid path.'
               'The output of this tool is a string that said operation succeeded or has an error.',
         );
 
@@ -18,15 +18,17 @@ final class DirectoryCreateTool extends Tool {
       final directory = Directory(toolInput);
 
       if (await directory.exists()) {
-        return "Directory already exists.";
-      }
-      final file = File(toolInput);
-      if (await file.exists()) {
-        return "File already exist at this path.";
+        await directory.delete(recursive: true);
+        return "Directory deleted successfully.";
       }
 
-      await directory.create();
-      return "Directory created successfully.";
+      final file = File(toolInput);
+      if (await file.exists()) {
+        await file.delete();
+        return "File deleted successfully.";
+      }
+
+      return "No file or directory exists at this path.";
     } catch (e) {
       return "An error occurred: ${e.toString()}";
     }

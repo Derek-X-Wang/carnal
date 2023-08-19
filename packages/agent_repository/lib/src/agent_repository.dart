@@ -1,17 +1,15 @@
 library agent_repository;
 
 import 'package:agent_repository/src/tools/directory_create.dart';
-import 'package:agent_repository/src/tools/directory_delete.dart';
 import 'package:agent_repository/src/tools/directory_list.dart';
-import 'package:agent_repository/src/tools/directory_rename.dart';
 import 'package:agent_repository/src/tools/file_append.dart';
 import 'package:agent_repository/src/tools/file_create.dart';
-import 'package:agent_repository/src/tools/file_delete.dart';
 import 'package:agent_repository/src/tools/file_read.dart';
-import 'package:agent_repository/src/tools/file_rename.dart';
 import 'package:agent_repository/src/tools/file_replace.dart';
 import 'package:agent_repository/src/tools/file_update.dart';
 import 'package:agent_repository/src/tools/files_read.dart';
+import 'package:agent_repository/src/tools/path_delete.dart';
+import 'package:agent_repository/src/tools/path_rename.dart';
 import 'package:agent_repository/src/tools/path_search.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:langchain/langchain.dart';
@@ -35,19 +33,17 @@ You have the permission to access following paths and sub-paths: ${paths.join(',
 When trying to access a path that not included in the permission, just say No Permission.
 ''');
     final tools = [
+      PathSearchTool(),
+      PathRenameTool(),
+      PathDeleteTool(),
       DirectoryListTool(),
       DirectoryCreateTool(),
-      DirectoryDeleteTool(),
-      DirectoryRenameTool(),
       FileReadTool(),
       FileAppendTool(),
       FileCreateTool(),
-      FileDeleteTool(),
-      FileRenameTool(),
       FileReplaceTool(),
       FileUpdateTool(),
       FilesReadTool(),
-      PathSearchTool(),
     ];
     final llm = ChatOpenAI(
       apiKey: dotenv.env['OPENAI_API_KEY']!,
@@ -102,7 +98,7 @@ When trying to access a path that not included in the permission, just say No Pe
     final executor = AgentExecutor(
         agent: agent2,
         memory: _memory,
-        maxIterations: 5,
+        // maxIterations: 5,
         earlyStoppingMethod: AgentEarlyStoppingMethod.force);
     final response = await executor.run(input);
     // final outputKey = executor.runOutputKey;
