@@ -26,6 +26,10 @@ final class DirectoryRenameTool extends Tool {
         await oldDirectory.rename(newDirectory);
         return "Directory renamed successfully.";
       } else {
+        final oldFile = File(inputJson['oldPath'] as String);
+        if (await oldFile.exists()) {
+          return "Directory does not exist. It's a file.";
+        }
         return "Directory does not exist.";
       }
     } catch (e) {
