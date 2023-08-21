@@ -1,4 +1,5 @@
 import 'package:agent_repository/agent_repository.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -81,6 +82,9 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
         return MaterialApp.router(
           routerConfig: router,
           title: 'Carnal App',
+          theme: FlexThemeData.light(scheme: FlexScheme.deepPurple),
+          darkTheme: FlexThemeData.dark(scheme: FlexScheme.deepPurple),
+          themeMode: ThemeMode.system,
         );
       },
     );

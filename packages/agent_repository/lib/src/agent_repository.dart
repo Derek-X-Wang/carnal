@@ -11,6 +11,7 @@ import 'package:agent_repository/src/tools/files_read.dart';
 import 'package:agent_repository/src/tools/path_delete.dart';
 import 'package:agent_repository/src/tools/path_rename.dart';
 import 'package:agent_repository/src/tools/path_search.dart';
+import 'package:agent_repository/src/tools/path_type.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:langchain/langchain.dart';
 import 'package:langchain_openai/langchain_openai.dart';
@@ -34,6 +35,7 @@ When trying to access a path that not included in the permission, just say No Pe
 ''');
     final tools = [
       PathSearchTool(),
+      PathTypeTool(),
       PathRenameTool(),
       PathDeleteTool(),
       DirectoryListTool(),
@@ -46,7 +48,7 @@ When trying to access a path that not included in the permission, just say No Pe
       FilesReadTool(),
     ];
     final llm = ChatOpenAI(
-      apiKey: dotenv.env['OPENAI_API_KEY']!,
+      apiKey: dotenv.env['OPENAI_API_KEY'],
       model: 'gpt-3.5-turbo-0613',
       temperature: 0,
     );

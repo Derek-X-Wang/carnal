@@ -82,15 +82,19 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
       MessageAdded event, Emitter<MouthState> emit) async {
     final messages = List<MessageItem>.from(state.messages);
     messages.add(event.message);
+    messages.add(MessageItem(
+        kind: UserKind.agent,
+        message: "I'm thinking...",
+        dateTime: DateTime.now()));
     emit(state.copyWith(messages: messages));
-    final newMessages = List<MessageItem>.from(state.messages);
+    final messages2 = List<MessageItem>.from(state.messages);
     final allowedPaths = state.watchers.map((watcher) => watcher.src).toList();
     final res =
         await _agentRepository.execute(event.message.message, allowedPaths);
     print("ai agent res: $res");
-    newMessages.add(MessageItem(
+    messages2.add(MessageItem(
         kind: UserKind.agent, message: res, dateTime: DateTime.now()));
-    emit(state.copyWith(messages: newMessages));
+    emit(state.copyWith(messages: messages2));
   }
 
   @override

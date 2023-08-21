@@ -1,0 +1,78 @@
+name: Releases
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  build_and_release:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [macOS] # focus on macOS for now
+        include:
+          - os: macos-latest
+            target: macOS
+            build_target: macos
+            release_directory: build/macos/Build/Products/Release
+          - os: windows-latest
+            target: Windows
+            build_target: windows
+            release_directory: build/windows/runner/Release
+          - os: ubuntu-latest
+            target: Linux
+            build_target: linux
+            release_directory: build/linux/x64/release/bundle
+    steps:
+      # Set up Flutter.
+      - name: Clone Flutter repository with master channel
+        uses: subosito/flutter-action@48cafc24713cca54bbe03cdc3a423187d413aafa
+        with:
+          channel: stable
+      - name: Install Linux dependencies
+        if: matrix.target == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev
+      - name: Enable desktop support
+        run: |
+          flutter config --enable-linux-desktop
+          flutter config --enable-macos-desktop
+          flutter config --enable-windows-desktop
+      - run: flutter doctor -v
+
+      # Checkout code and get packages.
+      - name: Checkout code
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+      
+      - name: Install project dependencies
+        run: flutter pub get
+      # - name: Generate intermediates
+      #   run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Get version
+        id: version
+        uses: NiklasLehnfeld/flutter-version-number-action@main
+
+      - name: Build artifacts
+        run: flutter build ${{ matrix.build_target }} --release
+
+      - name: Package Release files
+        uses: thedoctor0/zip-release@master
+        with:
+          type: "zip"
+          filename: carnal-${{ steps.version.outputs.version-number }}-${{ matrix.build_target }}.zip
+          directory: ${{ matrix.release_directory }}
+
+      - name: Release to github
+        uses: softprops/action-gh-release@v0.1.15
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: v${{ steps.version.outputs.version-number }}
+          tag_name: ${{ steps.version.outputs.version-number }}
+          generate_release_notes: true
+          files: ${{ matrix.release_directory }}/carnal-${{ steps.version.outputs.version-number }}-${{ matrix.build_target }}.zip
+    

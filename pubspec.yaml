@@ -68,6 +68,7 @@ dependencies:
   path: ^1.8.3
   langchain_openai: ^0.0.2
   flutter_dotenv: ^5.1.0
+  flex_color_scheme: ^7.2.0
 
 dev_dependencies:
   flutter_test:
