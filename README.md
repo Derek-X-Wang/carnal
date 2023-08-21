@@ -1,6 +1,6 @@
 # Carnal
 > 🚧 : Carnal is currently in early development. Many features may not be fully functional.
-### Your Computer as a Knowledge Base Working Seamlessly with Language Models Like OpenAI's GPT
+Your Computer as a Knowledge Base Working Seamlessly with Language Models Like OpenAI's GPT
 
 ## Overview
 Carnal is designed to leverage the power of Language Models (LLM) such as GPT from OpenAI to help users manage local files on their computer. With Carnal, you can read, modify, and delete local files and folders using natural language commands.

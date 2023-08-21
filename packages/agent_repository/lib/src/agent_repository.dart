@@ -35,7 +35,7 @@ When trying to access a path that not included in the permission, just say No Pe
 ''');
     final tools = [
       PathSearchTool(),
-      PathTypeTool(),
+      // PathTypeTool(),
       PathRenameTool(),
       PathDeleteTool(),
       DirectoryListTool(),

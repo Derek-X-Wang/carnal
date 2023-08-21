@@ -81,11 +81,13 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
   Future<void> _onMessageAdded(
       MessageAdded event, Emitter<MouthState> emit) async {
     final messages = List<MessageItem>.from(state.messages);
-    messages.add(event.message);
-    messages.add(MessageItem(
-        kind: UserKind.agent,
-        message: "I'm thinking...",
-        dateTime: DateTime.now()));
+    messages.addAll([
+      event.message,
+      MessageItem(
+          kind: UserKind.agent,
+          message: "I'm thinking...",
+          dateTime: DateTime.now()),
+    ]);
     emit(state.copyWith(messages: messages));
     final messages2 = List<MessageItem>.from(state.messages);
     final allowedPaths = state.watchers.map((watcher) => watcher.src).toList();

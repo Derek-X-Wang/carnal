@@ -16,6 +16,9 @@ class WatcherItem {
   bool canWrite;
   TreeNode? tree;
 
+  // Computed property to get the name
+  String get name => p.basename(src);
+
   WatcherItem(this.src,
       {this.canRead = true, this.canWrite = false, this.tree});
 

@@ -92,7 +92,7 @@ class EyeView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final item = state.items[index];
                   return ListTile(
-                    title: Text(item.src),
+                    title: Text(item.name),
                     trailing: Wrap(
                       children: [
                         Checkbox(

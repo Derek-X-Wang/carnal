@@ -7,6 +7,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:langchain_openai/langchain_openai.dart';
 import 'package:watcher/watcher.dart';
+import 'package:path/path.dart' as p;
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:carnal/utils/path.dart';
