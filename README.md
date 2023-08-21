@@ -1,5 +1,6 @@
 # Carnal
 > 🚧 : Carnal is currently in early development. Many features may not be fully functional.
+
 Your Computer as a Knowledge Base Working Seamlessly with Language Models Like OpenAI's GPT
 
 ## Overview
