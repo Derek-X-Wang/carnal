@@ -62,3 +62,4 @@ Enjoy using Carnal? Star the repo to show your support!
 - [ ] System tray
 - [ ] Shift+Enter for new line when chatting
 - [ ] Imporve ui when the agent is thinking
+- [ ] macOS: Launch icons bigger than normal
