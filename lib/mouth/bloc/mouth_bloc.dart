@@ -102,6 +102,8 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
   @override
   Future<void> close() {
     _timer.cancel();
+    scrollController.dispose();
+    editingController.dispose();
     return super.close();
   }
 }

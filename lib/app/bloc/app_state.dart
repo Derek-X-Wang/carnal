@@ -27,18 +27,17 @@ class WatcherItem {
   Map<String, dynamic> toJson() => _$WatcherItemToJson(this);
 }
 
-// @JsonSerializable(explicitToJson: true)
-// class UserProfile {
-//   final String src;
-//   bool canRead;
-//   bool canWrite;
+@JsonSerializable(explicitToJson: true)
+class Profile {
+  final String openAiApiKey;
+  final String ignoreFiles;
 
-//   WatcherItem(this.src, {this.canRead = true, this.canWrite = false});
+  Profile(this.openAiApiKey, this.ignoreFiles);
 
-//   factory WatcherItem.fromJson(Map<String, dynamic> json) =>
-//       _$WatcherItemFromJson(json);
-//   Map<String, dynamic> toJson() => _$WatcherItemToJson(this);
-// }
+  factory Profile.fromJson(Map<String, dynamic> json) =>
+      _$ProfileFromJson(json);
+  Map<String, dynamic> toJson() => _$ProfileToJson(this);
+}
 
 @JsonSerializable(explicitToJson: true)
 class AppState extends Equatable {

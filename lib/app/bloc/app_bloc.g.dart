@@ -23,6 +23,16 @@ Map<String, dynamic> _$WatcherItemToJson(WatcherItem instance) =>
       'tree': instance.tree?.toJson(),
     };
 
+Profile _$ProfileFromJson(Map<String, dynamic> json) => Profile(
+      json['openAiApiKey'] as String,
+      json['ignoreFiles'] as String,
+    );
+
+Map<String, dynamic> _$ProfileToJson(Profile instance) => <String, dynamic>{
+      'openAiApiKey': instance.openAiApiKey,
+      'ignoreFiles': instance.ignoreFiles,
+    };
+
 AppState _$AppStateFromJson(Map<String, dynamic> json) => AppState(
       items: (json['items'] as List<dynamic>)
           .map((e) => WatcherItem.fromJson(e as Map<String, dynamic>))

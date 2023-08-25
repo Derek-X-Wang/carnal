@@ -4,25 +4,27 @@ import '../entities/entities.dart';
 
 @immutable
 class Settings extends Equatable {
-  final List<ActionItem> actions;
-  final DispatchSettings dispatch;
+  final IgnoreSettings ignoreSettings;
+  final Credentials credentials;
   final UserTheme theme;
 
   const Settings(
-      {required this.actions, required this.dispatch, required this.theme});
+      {required this.ignoreSettings,
+      required this.credentials,
+      required this.theme});
 
   Settings copyWith(
-      {List<ActionItem>? actions,
-      DispatchSettings? dispatch,
+      {IgnoreSettings? ignoreSettings,
+      Credentials? credentials,
       UserTheme? theme}) {
     return Settings(
-        actions: actions ?? this.actions,
-        dispatch: dispatch ?? this.dispatch,
+        ignoreSettings: ignoreSettings ?? this.ignoreSettings,
+        credentials: credentials ?? this.credentials,
         theme: theme ?? this.theme);
   }
 
   @override
-  List<Object?> get props => [actions, dispatch, theme];
+  List<Object?> get props => [ignoreSettings, credentials, theme];
 
   @override
   String toString() {
@@ -31,86 +33,140 @@ class Settings extends Equatable {
 
   SettingsEntity toEntity() {
     return SettingsEntity(
-      actions: actions,
-      dispatch: dispatch.toEntity(),
-      theme: theme,
+      ignoreSettings: ignoreSettings.toEntity(),
+      credentials: credentials.toEntity(),
+      theme: theme.toEntity(),
     );
   }
 
   static Settings fromEntity(SettingsEntity entity) {
     return Settings(
-      actions: entity.actions,
-      dispatch: entity.dispatch == null
-          ? DispatchSettings.empty
-          : DispatchSettings.fromEntity(entity.dispatch!),
-      theme: entity.theme,
+      ignoreSettings: entity.ignoreSettings == null
+          ? IgnoreSettings.empty
+          : IgnoreSettings.fromEntity(entity.ignoreSettings!),
+      credentials: entity.credentials == null
+          ? Credentials.empty
+          : Credentials.fromEntity(entity.credentials!),
+      theme: entity.theme == null
+          ? UserTheme.empty
+          : UserTheme.fromEntity(entity.theme!),
     );
   }
 }
 
 @immutable
-class DispatchSettings extends Equatable {
-  final DateTime startTime;
-  final DateTime? endTime;
-  final double? randomBlockPercentage;
-  final int scheduleDays;
+class Credentials extends Equatable {
+  final String openAiApiKey;
 
-  const DispatchSettings({
-    required this.startTime,
-    this.endTime,
-    this.randomBlockPercentage,
-    this.scheduleDays = 7,
+  const Credentials({
+    required this.openAiApiKey,
   });
 
-  DispatchSettings copyWith(
-      {DateTime? startTime,
-      DateTime? endTime,
-      double? randomBlockPercentage,
-      int? scheduleDays}) {
-    return DispatchSettings(
-      startTime: startTime ?? this.startTime,
-      endTime: endTime ?? this.endTime,
-      randomBlockPercentage:
-          randomBlockPercentage ?? this.randomBlockPercentage,
-      scheduleDays: scheduleDays ?? this.scheduleDays,
+  Credentials copyWith({
+    String? openAiApiKey,
+  }) {
+    return Credentials(
+      openAiApiKey: openAiApiKey ?? this.openAiApiKey,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [startTime, endTime, randomBlockPercentage, scheduleDays];
+  List<Object?> get props => [openAiApiKey];
 
   @override
   String toString() {
-    return 'DispatchSettings {  }';
+    return 'Credentials {  }';
   }
 
-  DispatchSettingsEntity toEntity() {
-    return DispatchSettingsEntity(
-      startTime: startTime,
-      endTime: endTime,
-      randomBlockPercentage: randomBlockPercentage,
-      scheduleDays: scheduleDays,
+  CredentialsEntity toEntity() {
+    return CredentialsEntity(
+      openAiApiKey: openAiApiKey,
     );
   }
 
-  static DispatchSettings fromEntity(DispatchSettingsEntity entity) {
-    return DispatchSettings(
-      startTime: entity.startTime,
-      endTime: entity.endTime,
-      randomBlockPercentage: entity.randomBlockPercentage,
-      scheduleDays: entity.scheduleDays,
+  static Credentials fromEntity(CredentialsEntity entity) {
+    return Credentials(
+      openAiApiKey: entity.openAiApiKey,
     );
   }
 
-  static final empty =
-      DispatchSettings(startTime: DateTime.now(), scheduleDays: 10);
+  static final empty = Credentials(openAiApiKey: "");
+}
 
-  DateTime? get calculatedEndTime {
-    var end = endTime;
-    if (endTime == null) {
-      end = startTime.add(Duration(days: scheduleDays));
-    }
-    return end;
+@immutable
+class IgnoreSettings extends Equatable {
+  final String rules;
+
+  const IgnoreSettings({
+    required this.rules,
+  });
+
+  IgnoreSettings copyWith({
+    String? rules,
+  }) {
+    return IgnoreSettings(
+      rules: rules ?? this.rules,
+    );
   }
+
+  @override
+  List<Object?> get props => [rules];
+
+  @override
+  String toString() {
+    return 'IgnoreSettings {  }';
+  }
+
+  IgnoreSettingsEntity toEntity() {
+    return IgnoreSettingsEntity(
+      rules: rules,
+    );
+  }
+
+  static IgnoreSettings fromEntity(IgnoreSettingsEntity entity) {
+    return IgnoreSettings(
+      rules: entity.rules,
+    );
+  }
+
+  static final empty = IgnoreSettings(rules: "");
+}
+
+@immutable
+class UserTheme extends Equatable {
+  final String appearance;
+
+  const UserTheme({
+    required this.appearance,
+  });
+
+  UserTheme copyWith({
+    String? appearance,
+  }) {
+    return UserTheme(
+      appearance: appearance ?? this.appearance,
+    );
+  }
+
+  @override
+  List<Object?> get props => [appearance];
+
+  @override
+  String toString() {
+    return 'UserTheme {  }';
+  }
+
+  UserThemeEntity toEntity() {
+    return UserThemeEntity(
+      appearance: appearance,
+    );
+  }
+
+  static UserTheme fromEntity(UserThemeEntity entity) {
+    return UserTheme(
+      appearance: entity.appearance,
+    );
+  }
+
+  static final empty = UserTheme(appearance: "system");
 }

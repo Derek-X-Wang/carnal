@@ -64,3 +64,7 @@ Enjoy using Carnal? Star the repo to show your support!
 - [ ] Shift+Enter for new line when chatting
 - [ ] Imporve ui when the agent is thinking
 - [ ] macOS: Launch icons bigger than normal
+- [ ] Bring your own key
+- [ ] release on Github
+- [ ] Landing page
+- [ ] Doc loaders

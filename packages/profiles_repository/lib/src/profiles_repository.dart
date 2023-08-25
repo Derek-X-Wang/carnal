@@ -7,7 +7,6 @@ import 'dart:async';
 import 'package:profiles_repository/profiles_repository.dart';
 
 abstract class ProfilesRepository {
-  Future<void> updateDispatchSettings(String userId, DispatchSettings settings);
   Stream<Profile> profile(String userId);
   Stream<Settings> settings(String userId);
 }
