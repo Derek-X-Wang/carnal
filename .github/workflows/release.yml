@@ -17,14 +17,14 @@ jobs:
             target: macOS
             build_target: macos
             release_directory: build/macos/Build/Products/Release
-          - os: windows-latest
-            target: Windows
-            build_target: windows
-            release_directory: build/windows/runner/Release
-          - os: ubuntu-latest
-            target: Linux
-            build_target: linux
-            release_directory: build/linux/x64/release/bundle
+          # - os: windows-latest
+          #   target: Windows
+          #   build_target: windows
+          #   release_directory: build/windows/runner/Release
+          # - os: ubuntu-latest
+          #   target: Linux
+          #   build_target: linux
+          #   release_directory: build/linux/x64/release/bundle
     steps:
       # Set up Flutter.
       - name: Clone Flutter repository with master channel
@@ -47,6 +47,16 @@ jobs:
       # Checkout code and get packages.
       - name: Checkout code
         uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+
+      - name: Create .env file from secrets
+        run: |
+          secrets=("OPENAI_API_KEY")  # Define your secret names here
+          for secret_name in "${secrets[@]}"; do
+            secret_value="${!secret_name}"
+            echo "$secret_name=$secret_value" >> .env
+          done
+        env: 
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       
       - name: Install project dependencies
         run: flutter pub get
