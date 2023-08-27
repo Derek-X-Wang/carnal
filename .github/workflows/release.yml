@@ -4,6 +4,10 @@ on:
     branches:
       - release
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   build_and_release:
     name: Build ${{ matrix.target }}
