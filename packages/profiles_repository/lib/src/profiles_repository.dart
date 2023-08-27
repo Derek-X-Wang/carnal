@@ -9,4 +9,8 @@ import 'package:profiles_repository/profiles_repository.dart';
 abstract class ProfilesRepository {
   Stream<Profile> profile(String userId);
   Stream<Settings> settings(String userId);
+  Future<void> updateSettings(String userId, Settings settings);
+  Future<void> updateProfile(String userId, Profile profile);
+  Profile currentProfile(String userId);
+  Settings currentSettings(String userId);
 }

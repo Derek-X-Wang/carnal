@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:authentication_repository/authentication_repository.dart';
 
 class HandState extends Equatable {
   const HandState();

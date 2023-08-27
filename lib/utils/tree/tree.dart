@@ -6,6 +6,7 @@ import 'tree_node.dart';
 
 export 'tree_node.dart';
 export 'tools.dart';
+export 'watcher.dart';
 
 // skipIgnored: initially plan to include ignored files in the tree, but sometime the tree become too big, using this to skip ignored files
 // isIgnored: if the current directory is ignored

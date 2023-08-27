@@ -1,18 +1,15 @@
 import 'dart:async';
 
+import 'package:carnal/utils/tree/watcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:langchain_openai/langchain_openai.dart';
 import 'package:watcher/watcher.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:path/path.dart' as p;
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:carnal/utils/path.dart';
-import 'package:carnal/utils/tree/tree_node.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
@@ -20,11 +17,11 @@ part 'app_bloc.g.dart';
 
 class AppBloc extends HydratedBloc<AppEvent, AppState> {
   final AuthenticationRepository _authenticationRepository;
-  late final StreamSubscription<User> _userSubscription;
+  // late final StreamSubscription<User> _userSubscription;
   final Map<String, Watcher> _watchers = {};
   final Map<String, StreamSubscription> _watcherSubscriptions = {};
 
-  void _onUserChanged(User user) => add(AppUserChanged(user));
+  // void _onUserChanged(User user) => add(AppUserChanged(user));
 
   AppBloc({
     required AuthenticationRepository authenticationRepository,
@@ -32,7 +29,7 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
         super(
           const AppState(items: []),
         ) {
-    on<AppUserChanged>(_mapUserChanged);
+    // on<AppUserChanged>(_mapUserChanged);
     // on<AppLogoutRequested>(
     //     (event, emit) => unawaited(_authenticationRepository.logOut()));
     on<AppLifecycleChanged>(_mapLifecycleChanged);
@@ -58,28 +55,28 @@ class AppBloc extends HydratedBloc<AppEvent, AppState> {
     for (final subscription in _watcherSubscriptions.values) {
       subscription.cancel();
     }
-    _userSubscription.cancel();
+    // _userSubscription.cancel();
     return super.close();
   }
 }
 
 extension AppEvents on AppBloc {
-  Future<void> _mapUserChanged(
-      AppUserChanged event, Emitter<AppState> emit) async {
-    // if (event.user.isNotEmpty) {
-    //   if (event.user.isAnonymous) {
-    //     emit(AppState.anonymous(event.user));
-    //   } else {
-    //     emit(AppState.authenticated(event.user));
-    //   }
-    // } else {
-    //   /// AppState.unauthenticated is not used
-    //   /// login to a new anonymous user when the current user is logged out
-    //   /// _mapUserChangedToState will be triggered again after logInAnonymously
-    //   await _authenticationRepository.logInAnonymously();
-    //   emit(state);
-    // }
-  }
+  // Future<void> _mapUserChanged(
+  //     AppUserChanged event, Emitter<AppState> emit) async {
+  //   // if (event.user.isNotEmpty) {
+  //   //   if (event.user.isAnonymous) {
+  //   //     emit(AppState.anonymous(event.user));
+  //   //   } else {
+  //   //     emit(AppState.authenticated(event.user));
+  //   //   }
+  //   // } else {
+  //   //   /// AppState.unauthenticated is not used
+  //   //   /// login to a new anonymous user when the current user is logged out
+  //   //   /// _mapUserChangedToState will be triggered again after logInAnonymously
+  //   //   await _authenticationRepository.logInAnonymously();
+  //   //   emit(state);
+  //   // }
+  // }
 
   Future<void> _mapLifecycleChanged(
       AppLifecycleChanged event, Emitter<AppState> emit) async {

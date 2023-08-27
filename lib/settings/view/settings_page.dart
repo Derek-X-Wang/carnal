@@ -1,11 +1,11 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:carnal/settings/bloc/settings_bloc.dart';
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
 import 'package:carnal/app/app.dart';
 import 'package:carnal/utils/tree/tree.dart';
+import 'package:profiles_repository/profiles_repository.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({
@@ -17,9 +17,18 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final user = context.select((AppBloc bloc) => bloc.state.user);
+    final authenticationRepository =
+        RepositoryProvider.of<AuthenticationRepository>(context);
+    final user = authenticationRepository.currentUser;
+    final profilesRepository =
+        RepositoryProvider.of<ProfilesRepository>(context);
     return Material(
       child: BlocProvider(
-        create: (context) => SettingsBloc(),
+        create: (context) => SettingsBloc(
+          authenticationRepository: authenticationRepository,
+          profilesRepository: profilesRepository,
+          settings: profilesRepository.currentSettings(user.id),
+        ),
         child: SettingsView(),
       ),
     );
@@ -115,6 +124,10 @@ class SettingsView extends StatelessWidget {
                     final ignoreFiles = bloc.ignoreFilesController.text;
                     print('API Key: $apiKey');
                     print('Ignore Files: $ignoreFiles');
+                    bloc.add(SettingsSaveRequested());
+                    scaffoldManager.showSnackBar(SnackBar(
+                      content: Text("Successfully saved"),
+                    ));
                   },
                   child: Text('Save'),
                 ),

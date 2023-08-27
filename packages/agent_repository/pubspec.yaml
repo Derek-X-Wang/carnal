@@ -1,6 +1,7 @@
 name: agent_repository
 description: Dart package which manages the agent domain.
 version: 0.1.0
+publish_to: none
 
 environment:
   sdk: '>=3.0.5 <4.0.0'

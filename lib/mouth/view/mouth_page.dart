@@ -1,4 +1,5 @@
 import 'package:agent_repository/agent_repository.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:carnal/app/app.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:carnal/mouth/mouth.dart';
+import 'package:profiles_repository/profiles_repository.dart';
 
 class MouthPage extends StatelessWidget {
   const MouthPage({
@@ -21,6 +23,10 @@ class MouthPage extends StatelessWidget {
     return Material(
       child: BlocProvider(
         create: (context) => MouthBloc(
+          authenticationRepository:
+              RepositoryProvider.of<AuthenticationRepository>(context),
+          profilesRepository:
+              RepositoryProvider.of<ProfilesRepository>(context),
           agentRepository: RepositoryProvider.of<AgentRepository>(context),
           watchers: items,
         ),

@@ -3,10 +3,13 @@
 
 import 'dart:async';
 import 'package:agent_repository/agent_repository.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:carnal/app/bloc/app_bloc.dart';
+import 'package:carnal/utils/tree/tree.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:profiles_repository/profiles_repository.dart';
 
 enum UserKind {
   user,
@@ -63,6 +66,8 @@ class MessageAdded extends MouthEvent {
 }
 
 class MouthBloc extends Bloc<MouthEvent, MouthState> {
+  final AuthenticationRepository _authenticationRepository;
+  final ProfilesRepository _profilesRepository;
   final AgentRepository _agentRepository;
   final ScrollController scrollController = ScrollController();
   final TextEditingController editingController = TextEditingController();
@@ -70,9 +75,13 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
   late Timer _timer;
 
   MouthBloc({
+    required AuthenticationRepository authenticationRepository,
+    required ProfilesRepository profilesRepository,
     required AgentRepository agentRepository,
     required List<WatcherItem> watchers,
-  })  : _agentRepository = agentRepository,
+  })  : _profilesRepository = profilesRepository,
+        _authenticationRepository = authenticationRepository,
+        _agentRepository = agentRepository,
         super(MouthState(watchers: watchers, messages: const [])) {
     _timer = _toDayChangeTimer();
     on<MessageAdded>(_onMessageAdded);
@@ -90,13 +99,26 @@ class MouthBloc extends Bloc<MouthEvent, MouthState> {
     ]);
     emit(state.copyWith(messages: messages));
     final messages2 = List<MessageItem>.from(state.messages);
-    final allowedPaths = state.watchers.map((watcher) => watcher.src).toList();
-    final res =
-        await _agentRepository.execute(event.message.message, allowedPaths);
-    print("ai agent res: $res");
-    messages2.add(MessageItem(
-        kind: UserKind.agent, message: res, dateTime: DateTime.now()));
-    emit(state.copyWith(messages: messages2));
+
+    final user = _authenticationRepository.currentUser;
+    final settings = await _profilesRepository.settings(user.id).first;
+    final credentials = settings.credentials;
+    if (credentials.openAiApiKey.isEmpty) {
+      messages2.add(MessageItem(
+          kind: UserKind.agent,
+          message: "No ApiKey, pls go to Settings and save your ApiKey.",
+          dateTime: DateTime.now()));
+      emit(state.copyWith(messages: messages2));
+    } else {
+      final allowedPaths =
+          state.watchers.map((watcher) => watcher.src).toList();
+      final res = await _agentRepository.execute(
+          event.message.message, allowedPaths, credentials.openAiApiKey);
+      print("ai agent res: $res");
+      messages2.add(MessageItem(
+          kind: UserKind.agent, message: res, dateTime: DateTime.now()));
+      emit(state.copyWith(messages: messages2));
+    }
   }
 
   @override

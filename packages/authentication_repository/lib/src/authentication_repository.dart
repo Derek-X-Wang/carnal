@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:authentication_repository/authentication_repository.dart';
+import 'package:authentication_repository/src/models/models.dart';
 import 'package:cache/cache.dart';
 import 'package:crypto/crypto.dart';
 // import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
@@ -63,13 +63,11 @@ class AuthenticationRepository {
   /// the authentication state changes.
   ///
   /// Emits [User.empty] if the user is not authenticated.
-  // Stream<User> get user {
-  //   return _firebaseAuth.authStateChanges().map((firebaseUser) {
-  //     final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
-  //     _cache.write(key: userCacheKey, value: user);
-  //     return user;
-  //   });
-  // }
+  Stream<User> get user {
+    final user = User.empty;
+    _cache.write(key: userCacheKey, value: user);
+    return Stream.value(user);
+  }
 
   /// Returns the current cached user.
   /// Defaults to [User.empty] if there is no cached user.

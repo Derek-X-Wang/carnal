@@ -26,8 +26,13 @@ class AgentRepository {
   }) : _memory = memory ?? ConversationBufferMemory(returnMessages: true);
   final ConversationBufferMemory _memory;
 
-  // You can add other methods and properties here
-  Future<String> execute(String input, List<String> paths) async {
+  /// Execute the agent with the given [input].
+  Future<String> execute(
+    String input,
+    List<String> paths,
+    String apiKey,
+  ) async {
+    // final credentials = await _profileRepository.settings(userId);
     final systemChatMessage = SystemChatMessagePromptTemplate.fromTemplate('''
 I want you to act as a local file assistant which help the user to manage files and directories.
 You have the permission to access following paths and sub-paths: ${paths.join(',')}
@@ -48,7 +53,7 @@ When trying to access a path that not included in the permission, just say No Pe
       FilesReadTool(),
     ];
     final llm = ChatOpenAI(
-      apiKey: dotenv.env['OPENAI_API_KEY'],
+      apiKey: apiKey,
       model: 'gpt-3.5-turbo-0613',
       temperature: 0,
     );

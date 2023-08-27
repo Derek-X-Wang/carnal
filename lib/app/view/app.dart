@@ -11,15 +11,18 @@ import 'package:carnal/theme.dart';
 
 class App extends StatelessWidget {
   final AuthenticationRepository _authenticationRepository;
+  final ProfilesRepository _profilesRepository;
   final AgentRepository _agentRepository;
   final AppRouter _appRouter;
 
   const App({
     Key? key,
     required AuthenticationRepository authenticationRepository,
+    required ProfilesRepository profilesRepository,
     required AgentRepository agentRepository,
     required AppRouter appRouter,
   })  : _authenticationRepository = authenticationRepository,
+        _profilesRepository = profilesRepository,
         _agentRepository = agentRepository,
         _appRouter = appRouter,
         super(key: key);
@@ -31,6 +34,8 @@ class App extends StatelessWidget {
       providers: [
         RepositoryProvider<AuthenticationRepository>(
             create: (context) => _authenticationRepository),
+        RepositoryProvider<ProfilesRepository>(
+            create: (context) => _profilesRepository),
         RepositoryProvider<AgentRepository>(
             create: (context) => _agentRepository),
         RepositoryProvider<AppRouter>(create: (context) => _appRouter),

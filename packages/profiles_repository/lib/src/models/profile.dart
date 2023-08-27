@@ -1,45 +1,82 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
-import '../entities/entities.dart';
-import './settings.dart';
+part 'profile.freezed.dart';
+part 'profile.g.dart';
 
-@immutable
-class Profile extends Equatable {
-  final String name;
-  final Settings settings;
+// NOTE: This take me a night to figure out how to use nested freezed
+// Need to be in the same file otherwise runner doesn't functioning correctly
+@freezed
+class Profile with _$Profile {
+  const Profile._();
 
-  Profile({
-    required this.name,
-    required this.settings,
-  });
+  const factory Profile({
+    required Settings settings,
+  }) = _Profile;
 
-  Profile copyWith({String? name, Settings? settings}) {
-    return Profile(
-      name: name ?? this.name,
-      settings: settings ?? this.settings,
-    );
-  }
+  factory Profile.fromJson(Map<String, dynamic> json) =>
+      _$ProfileFromJson(json);
 
-  @override
-  List<Object?> get props => [name, settings];
+  static const empty = Profile(settings: Settings.empty);
+}
 
-  @override
-  String toString() {
-    return 'Profile { name: $name }';
-  }
+@freezed
+class Settings with _$Settings {
+  const Settings._();
 
-  ProfileEntity toEntity() {
-    return ProfileEntity(
-      name: this.name,
-      settings: this.settings.toEntity(),
-    );
-  }
+  const factory Settings({
+    required IgnoreSettings ignoreSettings,
+    required Credentials credentials,
+    required UserTheme theme,
+  }) = _Settings;
 
-  static Profile fromEntity(ProfileEntity entity) {
-    return Profile(
-      name: entity.name,
-      settings: Settings.fromEntity(entity.settings),
-    );
-  }
+  factory Settings.fromJson(Map<String, dynamic> json) =>
+      _$SettingsFromJson(json);
+
+  static const empty = Settings(
+      ignoreSettings: IgnoreSettings.empty,
+      credentials: Credentials.empty,
+      theme: UserTheme.empty);
+}
+
+@freezed
+class Credentials with _$Credentials {
+  const Credentials._();
+
+  const factory Credentials({
+    required String openAiApiKey,
+  }) = _Credentials;
+
+  factory Credentials.fromJson(Map<String, dynamic> json) =>
+      _$CredentialsFromJson(json);
+
+  static const empty = Credentials(openAiApiKey: "");
+}
+
+@freezed
+class IgnoreSettings with _$IgnoreSettings {
+  const IgnoreSettings._();
+
+  const factory IgnoreSettings({
+    required String rules,
+  }) = _IgnoreSettings;
+
+  factory IgnoreSettings.fromJson(Map<String, dynamic> json) =>
+      _$IgnoreSettingsFromJson(json);
+
+  static const empty = IgnoreSettings(rules: "");
+}
+
+@freezed
+class UserTheme with _$UserTheme {
+  const UserTheme._();
+
+  const factory UserTheme({
+    required String appearance,
+  }) = _UserTheme;
+
+  factory UserTheme.fromJson(Map<String, dynamic> json) =>
+      _$UserThemeFromJson(json);
+
+  static const empty = UserTheme(appearance: "system");
 }

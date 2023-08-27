@@ -1,44 +1,30 @@
-import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-/// {@template user}
-/// User model
-///
-/// [User.empty] represents an unauthenticated user.
-/// {@endtemplate}
-class User extends Equatable {
+part 'user.freezed.dart';
+part 'user.g.dart';
+
+@freezed
+class User with _$User {
+  const User._();
+
   /// {@macro user}
-  const User({
-    required this.id,
-    this.email,
-    this.name,
-    this.photo,
-    required this.isAnonymous,
-  });
+  const factory User({
+    required String id,
+    String? email,
+    String? name,
+    String? photo,
+    required bool isAnonymous,
+  }) = _User;
 
-  /// The current user's email address.
-  final String? email;
-
-  /// The current user's id.
-  final String id;
-
-  /// The current user's name (display name).
-  final String? name;
-
-  /// Url for the current user's photo.
-  final String? photo;
-
-  /// Whether the current user is anonymous.
-  final bool isAnonymous;
+  factory User.fromJson(Map<String, Object?> json) => _$UserFromJson(json);
 
   /// Empty user which represents an unauthenticated user.
-  static const empty = User(id: '', isAnonymous: false);
+  static const empty = User(id: 'default', isAnonymous: true);
 
   /// Convenience getter to determine whether the current user is empty.
   bool get isEmpty => this == User.empty;
 
   /// Convenience getter to determine whether the current user is not empty.
   bool get isNotEmpty => this != User.empty;
-
-  @override
-  List<Object?> get props => [email, id, name, photo];
 }

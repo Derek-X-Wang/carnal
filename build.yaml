@@ -6,3 +6,7 @@ targets:
         - lib/$lib$
         - lib/**
         - packages/**
+    builders:
+      json_serializable:
+        options:
+          explicit_to_json: true

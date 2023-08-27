@@ -1,13 +1,14 @@
-name: disk_storage
+name: local_storage
 description: Manage disk storage.
 version: 1.0.0
 
 environment:
-  sdk: ">=2.12.0-0 <3.0.0"
+  sdk: '>=3.0.5 <4.0.0'
 
 dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  synchronized: ^3.1.0
   uuid: ^3.0.5
 
 dev_dependencies:
