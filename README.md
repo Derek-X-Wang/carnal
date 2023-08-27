@@ -1,7 +1,7 @@
 # Carnal
 > 🚧 : Carnal is currently in early development. Many features may not be fully functional.
 
-Your Computer as a Knowledge Base Working Seamlessly with Language Models Like OpenAI's GPT
+Your Computer as a Knowledge Base Working Seamlessly with Language Models Like OpenAI's GPT.
 
 ## Overview
 Carnal is designed to leverage the power of Language Models (LLM) such as GPT from OpenAI to help users manage local files on their computer. With Carnal, you can read, modify, and delete local files and folders using natural language commands.
@@ -22,7 +22,17 @@ Having trouble? DM me at [Twitter](https://twitter.com/derekxinzhewang).
 
 ## Getting Started
 ### Installation
-Downloadable artifacts are coming soon. Stay tuned for a hassle-free installation experience.
+#### macOS
+
+1. Navigate to the [Carnal release page](https://github.com/Derek-X-Wang/carnal/releases).
+2. Find the latest release and download the `.zip` file for macOS.
+3. After downloading, unzip the `.zip` file and drag the Carnal app into your Applications folder.
+4. The first time you open Carnal, macOS may prevent it from running since it's downloaded from the internet. To bypass this:
+   - Go to System Settings.
+   - Go to Privacy & Security.
+   - Under the Security section, click 'Open Anyway' next to the message about Carnal.
+
+> ❗️ Remember: Always ensure you're downloading software from trusted sources. Given Carnal's capability to manage files on your computer, you must ensure you're using the official release from a trusted developer or build it yourself.
 
 ### Development
 To run Carnal in development mode, you can use the following command:
@@ -64,7 +74,5 @@ Enjoy using Carnal? Star the repo to show your support!
 - [ ] Shift+Enter for new line when chatting
 - [ ] Imporve ui when the agent is thinking
 - [ ] macOS: Launch icons bigger than normal
-- [ ] Bring your own key
-- [ ] release on Github
-- [ ] Landing page
 - [ ] Doc loaders
+- [ ] Reduce the size of the app
