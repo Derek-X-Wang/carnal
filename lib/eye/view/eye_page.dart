@@ -67,13 +67,13 @@ class EyeView extends StatelessWidget {
                     context.go('/mouth');
                   },
                 ),
-                ListTile(
-                  title: Text('Hand'),
-                  onTap: () {
-                    // Handle navigation or any action related to the hand
-                    context.go('/hand');
-                  },
-                ),
+                // ListTile(
+                //   title: Text('Hand'),
+                //   onTap: () {
+                //     // Handle navigation or any action related to the hand
+                //     context.go('/hand');
+                //   },
+                // ),
                 ListTile(
                   title: Text('Settings'),
                   onTap: () {

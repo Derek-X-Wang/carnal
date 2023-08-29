@@ -76,13 +76,13 @@ class SettingsView extends StatelessWidget {
                     context.go('/mouth');
                   },
                 ),
-                ListTile(
-                  title: Text('Hand'),
-                  onTap: () {
-                    // Settingsle navigation or any action related to the hand
-                    context.go('/hand');
-                  },
-                ),
+                // ListTile(
+                //   title: Text('Hand'),
+                //   onTap: () {
+                //     // Settingsle navigation or any action related to the hand
+                //     context.go('/hand');
+                //   },
+                // ),
                 ListTile(
                   title: Text('Settings'),
                   onTap: () {
@@ -100,6 +100,7 @@ class SettingsView extends StatelessWidget {
               children: [
                 TextField(
                   controller: bloc.apiKeyController,
+                  obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'API Key',
                     hintText: 'Enter your API key here',
@@ -134,50 +135,6 @@ class SettingsView extends StatelessWidget {
               ],
             ),
           ),
-        );
-      },
-    );
-  }
-
-  void _addWatcherPath(
-      AppBloc bloc, ScaffoldMessengerState scaffoldManager, String? path) {
-    if (path == null) {
-      return;
-    }
-    bloc.add(WatcherItemAdded(WatcherItem(path)));
-    scaffoldManager.showSnackBar(SnackBar(
-      content: Text("Successfully added $path"),
-    ));
-  }
-
-  Future<String?> _showTextInputDialog(BuildContext context) async {
-    String inputValue = '';
-
-    return showDialog<String>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Enter path or URL'),
-          content: TextField(
-            onChanged: (value) {
-              inputValue = value;
-            },
-            decoration: InputDecoration(hintText: 'Please enter path'),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(inputValue);
-              },
-              child: Text('OK'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(null);
-              },
-              child: Text('Cancel'),
-            ),
-          ],
         );
       },
     );
