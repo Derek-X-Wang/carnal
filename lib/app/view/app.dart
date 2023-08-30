@@ -1,4 +1,6 @@
 import 'package:agent_repository/agent_repository.dart';
+import 'package:bot_toast/bot_toast.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -81,6 +83,7 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
+    final botToastBuilder = BotToastInit();
     final router = RepositoryProvider.of<AppRouter>(context).router;
     return BlocBuilder<AppBloc, AppState>(
       builder: (context, state) {
@@ -90,6 +93,13 @@ class _AppViewState extends State<AppView> with WidgetsBindingObserver {
           theme: FlexThemeData.light(scheme: FlexScheme.deepPurple),
           darkTheme: FlexThemeData.dark(scheme: FlexScheme.deepPurple),
           themeMode: ThemeMode.system,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          builder: (context, child) {
+            child = botToastBuilder(context, child);
+            return child;
+          },
         );
       },
     );

@@ -3,7 +3,16 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  audioplayers_linux
+  clipboard_watcher
   file_selector_linux
+  hotkey_manager
+  screen_capturer
+  screen_retriever
+  screen_text_extractor
+  tray_manager
+  url_launcher_linux
+  window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

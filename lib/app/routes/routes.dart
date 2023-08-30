@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:carnal/eye/eye.dart' as eye;
@@ -12,6 +13,7 @@ class AppRouter {
     initialLocation: '/eye',
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
+    observers: [BotToastNavigatorObserver()],
     routes: <RouteBase>[
       eye.route,
       mouth.route,
