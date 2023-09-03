@@ -1,124 +1,11 @@
 {
-    "app_name": "Biyi",
+    "app_name": "Carnal",
     "ok": "OK",
     "cancel": "Cancel",
     "add": "Add",
     "delete": "Delete",
     "copied": "Copied",
     "please_choose": "Please Choose",
-    "language": {
-      "af": "Afrikaans",
-      "am": "Amharic",
-      "ar": "Arabic",
-      "az": "Azerbaijani",
-      "be": "Belarusian",
-      "bg": "Bulgarian",
-      "bn": "Bengali",
-      "bs": "Bosnian",
-      "ca": "Catalan",
-      "ceb": "Cebuano",
-      "co": "Corsican",
-      "cs": "Czech",
-      "cy": "Welsh",
-      "da": "Danish",
-      "de": "German",
-      "el": "Greek",
-      "en": "English",
-      "eo": "Esperanto",
-      "es": "Spanish",
-      "et": "Estonian",
-      "eu": "Basque",
-      "fa": "Persian",
-      "fi": "Finnish",
-      "fr": "French",
-      "fy": "Frisian",
-      "ga": "Irish",
-      "gd": "Scots Gaelic",
-      "gl": "Galician",
-      "gu": "Gujarati",
-      "ha": "Hausa",
-      "haw": "Hawaiian",
-      "he": "Hebrew",
-      "hi": "Hindi",
-      "hmn": "Hmong",
-      "hr": "Croatian",
-      "ht": "Haitian Creole",
-      "hu": "Hungarian",
-      "hy": "Armenian",
-      "id": "Indonesian",
-      "ig": "Igbo",
-      "is": "Icelandic",
-      "it": "Italian",
-      "iw": "Hebrew",
-      "ja": "Japanese",
-      "jw": "Javanese",
-      "ka": "Georgian",
-      "kk": "Kazakh",
-      "km": "Khmer",
-      "kn": "Kannada",
-      "ko": "Korean",
-      "ku": "Kurdish (Kurmanji)",
-      "ky": "Kyrgyz",
-      "la": "Latin",
-      "lb": "Luxembourgish",
-      "lo": "Lao",
-      "lt": "Lithuanian",
-      "lv": "Latvian",
-      "mg": "Malagasy",
-      "mi": "Maori",
-      "mk": "Macedonian",
-      "ml": "Malayalam",
-      "mn": "Mongolian",
-      "mr": "Marathi",
-      "ms": "Malay",
-      "mt": "Maltese",
-      "my": "Myanmar (Burmese)",
-      "ne": "Nepali",
-      "nl": "Dutch",
-      "no": "Norwegian",
-      "ny": "Chichewa",
-      "or": "Odia (Oriya)",
-      "pa": "Punjabi",
-      "pl": "Polish",
-      "ps": "Pashto",
-      "pt": "Portuguese",
-      "ro": "Romanian",
-      "ru": "Russian",
-      "rw": "Kinyarwanda",
-      "sd": "Sindhi",
-      "si": "Sinhala",
-      "sk": "Slovak",
-      "sl": "Slovenian",
-      "sm": "Samoan",
-      "sn": "Shona",
-      "so": "Somali",
-      "sq": "Albanian",
-      "sr": "Serbian",
-      "st": "Sesotho",
-      "su": "Sundanese",
-      "sv": "Swedish",
-      "sw": "Swahili",
-      "ta": "Tamil",
-      "te": "Telugu",
-      "tg": "Tajik",
-      "th": "Thai",
-      "tk": "Turkmen",
-      "tl": "Filipino",
-      "tr": "Turkish",
-      "tt": "Tatar",
-      "ug": "Uyghur",
-      "uk": "Ukrainian",
-      "ur": "Urdu",
-      "uz": "Uzbek",
-      "vi": "Vietnamese",
-      "xh": "Xhosa",
-      "yi": "Yiddish",
-      "yo": "Yoruba",
-      "zh": "Chinese",
-      "zh_CN": "Chinese",
-      "zh_TW": "Chinese (Traditional)",
-      "zu": "Zulu"
-    },
     "engine": {
       "baidu": "Baidu",
       "caiyun": "Caiyun",
@@ -141,18 +28,10 @@
       "tesseract": "Tesseract OCR",
       "youdao": "Youdao"
     },
-    "translation_mode": {
-      "auto": "Auto",
-      "manual": "Manual"
-    },
     "theme_mode": {
       "light": "Light",
       "dark": "Dark",
       "system": "System"
-    },
-    "word_pronunciation": {
-      "us": "US",
-      "uk": "UK"
     },
     "tray_context_menu": {
       "item_show": "Show",
@@ -184,10 +63,6 @@
       "btn_trans": "Translate",
       "msg_please_enter_word_or_text": "No text entered or text not extracted",
       "msg_capture_screen_area_canceled": "Capture screen area has been canceled"
-    },
-    "page_language_chooser": {
-      "title": "Choose language",
-      "pref_section_title_all": "All"
     },
     "page_ocr_engine_chooser": {
       "title": "Text Detection Engine",
@@ -236,14 +111,6 @@
     "page_setting_theme_mode": {
       "title": "Theme Mode"
     },
-    "page_setting_translate": {
-      "title": "Translate",
-      "pref_section_title_default_translate_engine": "Default translate engine",
-      "pref_section_title_translation_mode": "Translation mode",
-      "pref_section_title_default_detect_language_engine": "Default detect language engine",
-      "pref_section_title_translation_target": "Translation target",
-      "pref_item_title_double_click_copy_result": "Double-click to copy translation result"
-    },
     "page_settings": {
       "title": "Settings",
       "text_version": "Version {} BUILD {}",
@@ -273,30 +140,24 @@
         "title": "Are you sure you want to exit?"
       }
     },
-    "page_translation_engine_chooser": {
-      "title": "Text Translation Engine",
+    "page_llm_engine_chooser": {
+      "title": "LLM Engine",
       "pref_section_title_private": "Private",
       "pref_item_title_no_available_engines": "No available engines"
     },
-    "page_translation_engine_create_or_edit": {
-      "title": "Add Text Translation Engine",
+    "page_llm_engine_create_or_edit": {
+      "title": "Add LLM Engine",
       "pref_section_title_engine_type": "Engine type",
       "pref_section_title_support_interface": "Support interface",
       "pref_section_title_option": "Option"
     },
-    "page_translation_engine_type_chooser": {
+    "page_llm_engine_type_chooser": {
       "title": "Engine type"
     },
-    "page_translation_engines_manage": {
-      "title": "Text Translation Engine",
+    "page_llm_engines_manage": {
+      "title": "LLM Engine",
       "pref_section_title_private": "Private",
       "pref_section_description_private": "Long press an item to reorder it"
-    },
-    "page_translation_target_new": {
-      "title": "Add Translation Target",
-      "title_with_edit": "Edit Translation Target",
-      "source_language": "Source language",
-      "target_language": "Target language"
     },
     "page_your_plan_selector": {
       "title": "Select Your Plan",

@@ -55,6 +55,9 @@ Future<void> _ensureInitialized() async {
 }
 
 void main() async {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    print(details);
+  };
   await _ensureInitialized();
   Bloc.observer = AppBlocObserver();
   Bloc.transformer = sequential<dynamic>();

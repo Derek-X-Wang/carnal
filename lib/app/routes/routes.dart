@@ -5,12 +5,13 @@ import 'package:carnal/eye/eye.dart' as eye;
 import 'package:carnal/mouth/mouth.dart' as mouth;
 import 'package:carnal/hand/hand.dart' as hand;
 import 'package:carnal/settings/settings.dart' as settings;
+import 'package:carnal/home/home.dart' as home;
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
   late final GoRouter _router = GoRouter(
-    initialLocation: '/eye',
+    initialLocation: '/',
     debugLogDiagnostics: true,
     navigatorKey: _rootNavigatorKey,
     observers: [BotToastNavigatorObserver()],
@@ -19,6 +20,7 @@ class AppRouter {
       mouth.route,
       hand.route,
       settings.route,
+      home.route,
     ],
     // errorBuilder: (context, state) => const NotFoundScreen(),
   );

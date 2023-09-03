@@ -70,7 +70,6 @@ Enjoy using Carnal? Star the repo to show your support!
 - [ ] Improve the ability to handle multiple files at the same times
 - [ ] Full text search for memory
 - [ ] Refactor Globs matching logic for ignored files
-- [ ] System tray
 - [ ] Shift+Enter for new line when chatting
 - [ ] Imporve ui when the agent is thinking
 - [ ] macOS: Launch icons bigger than normal
