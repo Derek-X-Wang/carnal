@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:carnal/utils/context_source/context_source.dart';
 import 'package:carnal/utils/platform_util.dart';
 import 'package:carnal/utils/shortcut_service.dart';
 import 'package:carnal/utils/tree/watcher.dart';
@@ -52,7 +53,7 @@ class AppBloc extends HydratedBloc<AppEvent, AppState>
     required AuthenticationRepository authenticationRepository,
   })  : _authenticationRepository = authenticationRepository,
         super(
-          const AppState(items: []),
+          const AppState(items: [], contextSources: []),
         ) {
     // on<AppUserChanged>(_mapUserChanged);
     // on<AppLogoutRequested>(
@@ -63,6 +64,10 @@ class AppBloc extends HydratedBloc<AppEvent, AppState>
     on<WatcherItemAdded>(_mapWatcherItemAdded);
     on<WatcherItemRemoved>(_mapWatcherItemRemoved);
     on<WatchFileChanged>(_mapWatchFileChanged);
+
+    on<ContextSourcesChanged>(_mapContextSourcesChanged);
+    on<ContextSourceAdded>(_mapContextSourceAdded);
+    on<ContextSourceRemoved>(_mapContextSourceRemoved);
 
     // _userSubscription = _authenticationRepository.user.listen(_onUserChanged);
     // recreate watcher and subscriptions for each item
@@ -250,6 +255,26 @@ extension WatchEvents on AppBloc {
       case ChangeType.REMOVE: // remove from db
         break;
     }
+  }
+
+  void _mapContextSourcesChanged(
+      ContextSourcesChanged event, Emitter<AppState> emit) {
+    // for each item, create a watcher if it doesn't exist
+    // final items = _syncWatcherItems(event.items);
+    emit(state.copyWith(contextSources: event.items));
+  }
+
+  void _mapContextSourceAdded(
+      ContextSourceAdded event, Emitter<AppState> emit) {
+    final items = [...state.contextSources, event.item];
+    add(ContextSourcesChanged(items));
+  }
+
+  void _mapContextSourceRemoved(
+      ContextSourceRemoved event, Emitter<AppState> emit) {
+    final items =
+        state.contextSources.where((item) => item != event.item).toList();
+    add(ContextSourcesChanged(items));
   }
 }
 

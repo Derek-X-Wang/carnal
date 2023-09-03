@@ -90,11 +90,6 @@ extension TrayManager on AppBloc {
                     'tray_context_menu.item_discussion_subitem_discord_server'
                         .tr(),
               ),
-              MenuItem(
-                key: kMenuSubItemKeyJoinQQGroup,
-                label:
-                    'tray_context_menu.item_discussion_subitem_qq_group'.tr(),
-              ),
             ],
           ),
         ),

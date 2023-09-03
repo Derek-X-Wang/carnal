@@ -11,19 +11,23 @@ enum AppStatus {
 class AppState extends Equatable {
   final ThemeMode themeMode = ThemeMode.system;
   final List<WatcherItem> items;
+  final List<ContextSource> contextSources;
 
   const AppState({
     required this.items,
+    required this.contextSources,
   });
 
-  AppState copyWith({List<WatcherItem>? items}) {
+  AppState copyWith(
+      {List<WatcherItem>? items, List<ContextSource>? contextSources}) {
     return AppState(
       items: items ?? this.items,
+      contextSources: contextSources ?? this.contextSources,
     );
   }
 
   @override
-  List<Object> get props => [items];
+  List<Object> get props => [items, contextSources];
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
       _$AppStateFromJson(json);

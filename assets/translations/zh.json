@@ -6,6 +6,7 @@
   "delete": "删除",
   "copied": "已复制",
   "please_choose": "请选择",
+  "save": "保存",
   "engine": {
     "baidu": "百度翻译",
     "caiyun": "彩云小译",
@@ -54,13 +55,13 @@
     "limited_banner_msg_allow_access_tip": "点击「授权」后如无任何响应，请点击「前往设置」进行手动设置。",
     "limited_banner_msg_all_access_allowed": "屏幕取词功能已启用",
     "limited_banner_msg_all_access_not_allowed": "未获得所需权限，\n请重新检查并进行设置。",
-    "input_hint": "在此处输入单词或文本",
-    "text_extracting_text": "正在提取文字...",
+    "input_hint": "命令智能体",
+    "text_agent_executing": "智能体工作中...",
     "tip_translation_mode": "当前翻译模式：{}",
     "tip_extract_text_from_screen_capture": "截取屏幕区域并识别文字",
     "tip_extract_text_from_clipboard": "读取剪切板内容",
     "btn_clear": "清空",
-    "btn_trans": "翻译",
+    "btn_send": "发送",
     "msg_please_enter_word_or_text": "未输入或未提取到文本",
     "msg_capture_screen_area_canceled": "截取屏幕区域已取消"
   },
@@ -82,13 +83,23 @@
     "pref_section_title_private": "私有",
     "pref_section_description_private": "长按项目以重新排序"
   },
+  "page_knowledge": {
+    "title": "知识",
+    "pref_section_title_directory": "文件夹",
+    "pref_section_title_file": "文件"
+  },
   "page_setting_app_language": {
     "title": "显示语言"
   },
-  "page_setting_extract_text": {
-    "title": "取词",
-    "pref_section_title_default_detect_text_engine": "默认文字识别引擎",
-    "pref_item_auto_copy_detected_text": "自动复制检测到的文本"
+  "page_settings_api_keys": {
+    "title": "密匙",
+    "pref_section_title_openai": "OpenAI",
+    "pref_item_placeholder_openai_key": "OpenAI密匙"
+  },
+  "page_settings_engines": {
+    "title": "模型选择",
+    "pref_section_title_default_llm": "默认语言模型",
+    "pref_item_title_openai_3_turbo": "OpenAI GPT3.5 Turbo"
   },
   "page_setting_interface": {
     "title": "界面",
@@ -115,6 +126,7 @@
     "title": "设置",
     "text_version": "版本 {} BUILD {}",
     "pref_section_title_general": "常规",
+    "pref_section_title_llm": "语言模型",
     "pref_section_title_appearance": "外观",
     "pref_section_title_shortcuts": "快捷键",
     "pref_section_title_input_settings": "输入设置",
@@ -122,8 +134,8 @@
     "pref_section_title_service_integration": "服务接入",
     "pref_section_title_others": "其他",
     "pref_item_title_your_plan": "当前会员计划",
-    "pref_item_title_extract_text": "取词",
-    "pref_item_title_translate": "翻译",
+    "pref_item_title_api_keys": "密匙",
+    "pref_item_title_engines": "模型选择",
     "pref_item_title_interface": "界面",
     "pref_item_title_app_language": "显示语言",
     "pref_item_title_theme_mode": "主题模式",
@@ -132,9 +144,8 @@
     "pref_item_title_submit_with_meta_enter": "用 Ctrl + Enter 提交",
     "pref_item_title_submit_with_meta_enter_mac": "用 ⌘ + Enter 提交",
     "pref_item_title_launch_at_startup": "登录时启动",
-    "pref_item_title_engines": "文本翻译",
     "pref_item_title_ocr_engines": "文字识别",
-    "pref_item_title_about": "关于比译",
+    "pref_item_title_about": "关于Carnal",
     "pref_item_title_exit_app": "退出应用",
     "exit_app_dialog": {
       "title": "您确定要退出吗？"

@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = context.select((AppBloc bloc) => bloc.state.items);
+    final sources = context.select((AppBloc bloc) => bloc.state.contextSources);
     return Material(
       child: BlocProvider(
         create: (context) => HomeBloc(
@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
           profilesRepository:
               RepositoryProvider.of<ProfilesRepository>(context),
           agentRepository: RepositoryProvider.of<AgentRepository>(context),
-          watchers: items,
+          sources: sources,
         ),
         child: HomeView(),
       ),
@@ -90,9 +90,10 @@ class HomeView extends StatelessWidget {
           MessageInputView(
             focusNode: bloc.focusNode,
             controller: bloc.editingController,
-            isTextDetecting: false,
+            isAgentExecuting: false,
             onButtonTappedClear: () {
-              bloc.add(const HomeMessageInputChanged(''));
+              // bloc.add(const HomeMessageInputChanged(''));
+              bloc.editingController.clear();
             },
             onButtonTappedSend: () {
               bloc.add(HomeMessageSent());

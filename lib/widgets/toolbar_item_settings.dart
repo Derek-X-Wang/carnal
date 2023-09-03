@@ -40,12 +40,12 @@ class _ToolbarItemSettingsState extends State<ToolbarItemSettings> {
         padding: EdgeInsets.zero,
         borderRadius: BorderRadius.zero,
         child: Icon(
-          FluentIcons.eye_20_regular,
+          FluentIcons.brain_circuit_20_regular,
           size: 20,
           color: Theme.of(context).iconTheme.color,
         ),
         onPressed: () {
-          context.go('/settings');
+          context.go('/knowledge');
         },
       ),
     );

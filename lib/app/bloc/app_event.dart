@@ -68,3 +68,30 @@ class WatchFileChanged extends AppEvent {
   @override
   List<Object> get props => [item, event];
 }
+
+class ContextSourcesChanged extends AppEvent {
+  const ContextSourcesChanged(this.items);
+
+  final List<ContextSource> items;
+
+  @override
+  List<Object> get props => [items];
+}
+
+class ContextSourceAdded extends AppEvent {
+  const ContextSourceAdded(this.item);
+
+  final ContextSource item;
+
+  @override
+  List<Object> get props => [item];
+}
+
+class ContextSourceRemoved extends AppEvent {
+  const ContextSourceRemoved(this.item);
+
+  final ContextSource item;
+
+  @override
+  List<Object> get props => [item];
+}

@@ -6,6 +6,7 @@ import 'package:carnal/mouth/mouth.dart' as mouth;
 import 'package:carnal/hand/hand.dart' as hand;
 import 'package:carnal/settings/settings.dart' as settings;
 import 'package:carnal/home/home.dart' as home;
+import 'package:carnal/knowledge/knowledge.dart' as knowledge;
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -19,8 +20,9 @@ class AppRouter {
       eye.route,
       mouth.route,
       hand.route,
-      settings.route,
+      settings.shellRoute,
       home.route,
+      knowledge.route,
     ],
     // errorBuilder: (context, state) => const NotFoundScreen(),
   );

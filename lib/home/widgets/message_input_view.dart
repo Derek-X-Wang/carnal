@@ -15,7 +15,7 @@ class MessageInputView extends StatelessWidget {
     required this.controller,
     this.onChanged,
     this.capturedData,
-    required this.isTextDetecting,
+    required this.isAgentExecuting,
     required this.onButtonTappedClear,
     required this.onButtonTappedSend,
   }) : super(key: key);
@@ -25,7 +25,7 @@ class MessageInputView extends StatelessWidget {
   final ValueChanged<String>? onChanged;
 
   final CapturedData? capturedData;
-  final bool isTextDetecting;
+  final bool isAgentExecuting;
 
   final VoidCallback onButtonTappedClear;
   final VoidCallback onButtonTappedSend;
@@ -67,7 +67,7 @@ class MessageInputView extends StatelessWidget {
             borderRadius: BorderRadius.circular(2),
             onPressed: onButtonTappedSend,
             child: Text(
-              'page_desktop_popup.btn_trans'.tr(),
+              'page_desktop_popup.btn_send'.tr(),
               style: const TextStyle(fontSize: 12),
             ),
           ),
@@ -132,7 +132,7 @@ class MessageInputView extends StatelessWidget {
                       onButtonTappedSend();
                     },
                   ),
-                  if (isTextDetecting)
+                  if (isAgentExecuting)
                     Positioned(
                       left: 0,
                       right: 0,
@@ -152,7 +152,7 @@ class MessageInputView extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 6),
                                 Text(
-                                  'page_desktop_popup.text_extracting_text'
+                                  'page_desktop_popup.text_agent_executing'
                                       .tr(),
                                   style: TextStyle(
                                     color: textTheme.bodySmall!.color,

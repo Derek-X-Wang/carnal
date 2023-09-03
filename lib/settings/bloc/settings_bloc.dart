@@ -3,10 +3,12 @@
 
 import 'dart:async';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:carnal/utils/platform_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:profiles_repository/profiles_repository.dart';
+import 'package:window_manager/window_manager.dart';
 
 class SettingsState extends Equatable {
   final String openAiApiKey;
@@ -63,6 +65,12 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   final ProfilesRepository _profilesRepository;
   final TextEditingController apiKeyController;
   final TextEditingController ignoreFilesController;
+
+  final GlobalKey _bannersViewKey = GlobalKey();
+  final GlobalKey messagesViewKey = GlobalKey();
+  final GlobalKey inputViewKey = GlobalKey();
+  final GlobalKey _resultsViewKey = GlobalKey();
+  Timer? _resizeTimer;
 
   void _onOpenAiApiKeyChanged() =>
       add(SettingsOpenAiApiKeyChanged(apiKeyController.text));
@@ -126,3 +134,39 @@ extension SettingsEvents on SettingsBloc {
 }
 
 extension Helpers on SettingsBloc {}
+
+extension Window on SettingsBloc {
+  void windowResize() {
+    // if (Navigator.of(context).canPop()) return;
+
+    if (_resizeTimer != null && _resizeTimer!.isActive) {
+      _resizeTimer?.cancel();
+    }
+    _resizeTimer = Timer.periodic(const Duration(milliseconds: 10), (_) async {
+      if (!kIsMacOS) {
+        await Future.delayed(const Duration(milliseconds: 100));
+      }
+
+      const defaultMaxWindowHeight = 460.0;
+      const defaultMaxWindowWidth = 400.0;
+      try {
+        Size oldSize = await windowManager.getSize();
+        Size newSize = const Size(
+          defaultMaxWindowWidth,
+          defaultMaxWindowHeight,
+        );
+        if (oldSize.width != newSize.width ||
+            oldSize.height != newSize.height) {
+          await windowManager.setSize(newSize, animate: true);
+        }
+      } catch (error) {
+        // print(error);
+      }
+
+      if (_resizeTimer != null) {
+        _resizeTimer?.cancel();
+        _resizeTimer = null;
+      }
+    });
+  }
+}
