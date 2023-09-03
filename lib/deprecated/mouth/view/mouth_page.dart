@@ -7,7 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:carnal/mouth/mouth.dart';
+import 'package:carnal/deprecated/mouth/mouth.dart';
 import 'package:profiles_repository/profiles_repository.dart';
 
 class MouthPage extends StatelessWidget {

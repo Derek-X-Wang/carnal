@@ -1,10 +1,10 @@
+import 'package:carnal/deprecated/hand/hand.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
 import 'package:carnal/app/app.dart';
-import 'package:carnal/Hand/Hand.dart';
 import 'package:carnal/utils/tree/tree.dart';
 
 class HandPage extends StatelessWidget {

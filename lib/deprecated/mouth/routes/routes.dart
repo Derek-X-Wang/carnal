@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:carnal/mouth/mouth.dart';
+import 'package:carnal/deprecated/mouth/mouth.dart';
 
 // List<Page> onGenerateTodayViewPages(TodayFlowState state, List<Page<dynamic>> pages) {
 //   return [TodayPage.page()];

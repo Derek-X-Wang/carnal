@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:carnal/hand/hand.dart';
+import 'package:carnal/deprecated/eye/eye.dart';
 
 // List<Page> onGenerateTodayViewPages(TodayFlowState state, List<Page<dynamic>> pages) {
 //   return [TodayPage.page()];
 // }
 
 final GoRoute route = GoRoute(
-  path: '/hand',
-  name: 'hand',
+  path: '/eye',
+  name: 'eye',
   pageBuilder: (BuildContext context, GoRouterState state) {
-    return HandPage.page();
+    return EyePage.page();
   },
   routes: <RouteBase>[
     GoRoute(

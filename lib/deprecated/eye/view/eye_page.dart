@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:carnal/app/app.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:go_router/go_router.dart';
-import 'package:carnal/eye/eye.dart';
+import 'package:carnal/deprecated/eye/eye.dart';
 import 'package:carnal/utils/tree/tree.dart';
 
 class EyePage extends StatelessWidget {
