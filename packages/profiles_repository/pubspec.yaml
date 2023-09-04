@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  rxdart: ^0.27.3
+  rxdart: ^0.27.7
   equatable: ^2.0.3
   uuid: ^3.0.5
   freezed_annotation: ^2.4.1

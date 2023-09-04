@@ -12,12 +12,94 @@ class Profile with _$Profile {
 
   const factory Profile({
     required Settings settings,
+    required List<ContextSource> sources,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>
       _$ProfileFromJson(json);
 
-  static const empty = Profile(settings: Settings.empty);
+  static const empty = Profile(settings: Settings.empty, sources: []);
+}
+
+@freezed
+class ContextSource with _$ContextSource {
+  const ContextSource._();
+
+  // For directories
+  const factory ContextSource.directory({
+    required bool canRead,
+    required bool canWrite,
+    required String path, // Directory path
+    required String name,
+    String? content, // Text content
+  }) = DirectoryContext;
+
+  // For files
+  const factory ContextSource.file({
+    required bool canRead,
+    required bool canWrite,
+    required String path, // File path
+    required String name,
+    String? content, // Text content
+  }) = FileContext;
+
+  // For text
+  const factory ContextSource.text({
+    required bool canRead,
+    required String content, // Text content
+    required String name,
+  }) = TextContext;
+
+  // For screen captures
+  const factory ContextSource.screenCapture({
+    required bool canRead,
+    required String imagePath, // Path to the image of the screen capture
+    required String name,
+    String? content, // Text content
+  }) = ScreenCaptureContext;
+
+  factory ContextSource.fromJson(Map<String, dynamic> json) =>
+      _$ContextSourceFromJson(json);
+
+  String get name {
+    return when(
+      directory: (bool canRead, bool canWrite, String path, String name,
+          String? content) {
+        return name;
+      },
+      file: (bool canRead, bool canWrite, String path, String name,
+          String? content) {
+        return name;
+      },
+      text: (bool canRead, String content, String name) {
+        return name;
+      },
+      screenCapture:
+          (bool canRead, String imagePath, String name, String? content) {
+        return name;
+      },
+    );
+  }
+
+  String? get path {
+    return when(
+      directory: (bool canRead, bool canWrite, String path, String name,
+          String? content) {
+        return path;
+      },
+      file: (bool canRead, bool canWrite, String path, String name,
+          String? content) {
+        return path;
+      },
+      text: (bool canRead, String content, String name) {
+        return null;
+      },
+      screenCapture:
+          (bool canRead, String imagePath, String name, String? content) {
+        return null;
+      },
+    );
+  }
 }
 
 @freezed

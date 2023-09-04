@@ -1,4 +1,4 @@
-import 'package:carnal/utils/context_source/context_source.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:carnal/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:carnal/widgets/preference_list/preference_list.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import 'package:carnal/knowledge/knowledge.dart';
 import 'package:carnal/utils/tree/tree.dart';
 import 'package:path/path.dart' as p;
+import 'package:profiles_repository/profiles_repository.dart';
 
 class KnowledgePage extends StatelessWidget {
   const KnowledgePage({
@@ -25,7 +26,12 @@ class KnowledgePage extends StatelessWidget {
     // final user = context.select((AppBloc bloc) => bloc.state.user);
     return Material(
       child: BlocProvider(
-        create: (context) => KnowledgeBloc(),
+        create: (context) => KnowledgeBloc(
+          authenticationRepository:
+              RepositoryProvider.of<AuthenticationRepository>(context),
+          profilesRepository:
+              RepositoryProvider.of<ProfilesRepository>(context),
+        ),
         child: KnowledgeView(),
       ),
     );
@@ -51,119 +57,65 @@ class KnowledgeView extends StatelessWidget {
     );
   }
 
-  Widget _buildBodyOld(BuildContext context) {
-    final appBloc = BlocProvider.of<AppBloc>(context);
-    final bloc = BlocProvider.of<KnowledgeBloc>(context);
-    final scaffoldManager = ScaffoldMessenger.of(context);
-    return BlocBuilder<AppBloc, AppState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: _buildAppBar(context),
-          body: Column(
-            children: [
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: state.items.length,
-                itemBuilder: (context, index) {
-                  final item = state.items[index];
-                  return ListTile(
-                    title: Text(item.name),
-                    trailing: Wrap(
-                      children: [
-                        Checkbox(
-                          value: item.canRead,
-                          onChanged: (newValue) {
-                            item.canRead = newValue!;
-                          },
-                        ),
-                        const Text('Read'),
-                        Checkbox(
-                          value: item.canWrite,
-                          onChanged: (newValue) {
-                            item.canWrite = newValue!;
-                          },
-                        ),
-                        const Text('Write'),
-                        IconButton(
-                          icon: const Icon(Icons.track_changes),
-                          onPressed: () async {
-                            final tree = await buildTree(item.src, []);
-                            printTree(tree, "");
-                          },
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            appBloc.add(WatcherItemRemoved(item));
-                          },
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-          floatingActionButton: _buildActionButton(context),
-        );
-      },
-    );
-  }
-
   Widget _buildBody(BuildContext context) {
-    final appBloc = BlocProvider.of<AppBloc>(context);
-    final contextSources =
-        context.select((AppBloc bloc) => bloc.state.contextSources);
-    final directories = contextSources.whereType<DirectoryContext>().toList();
-    final files = contextSources.whereType<FileContext>().toList();
-    return PreferenceList(
-      children: [
-        if (directories.isNotEmpty)
-          PreferenceListSection(
-            title: Text('page_knowledge.pref_section_title_directory'.tr()),
-            children: directories
-                .map((e) => PreferenceListItem(
-                      disabled: true,
-                      title: Text(e.name),
-                      accessoryView: IconButton(
-                        icon: const Icon(
-                          FluentIcons.delete_20_regular,
-                          size: 20,
-                          color: Colors.red,
-                        ),
-                        onPressed: () {
-                          appBloc.add(ContextSourceRemoved(e));
-                        },
-                      ),
-                    ))
-                .toList(),
-          ),
-        if (files.isNotEmpty)
-          PreferenceListSection(
-            title: Text('page_knowledge.pref_section_title_file'.tr()),
-            children: files
-                .map((e) => PreferenceListItem(
-                      disabled: true,
-                      title: Text(e.name),
-                      accessoryView: IconButton(
-                        icon: const Icon(
-                          FluentIcons.delete_20_regular,
-                          size: 20,
-                          color: Colors.red,
-                        ),
-                        onPressed: () {
-                          appBloc.add(ContextSourceRemoved(e));
-                        },
-                      ),
-                    ))
-                .toList(),
-          ),
-      ],
-    );
+    final bloc = BlocProvider.of<KnowledgeBloc>(context);
+    return StreamBuilder<List<ContextSource>>(
+        stream: bloc.sources,
+        builder: (context, snapshot) {
+          if (snapshot.data == null) return Container();
+          final directories =
+              snapshot.data!.whereType<DirectoryContext>().toList();
+          final files = snapshot.data!.whereType<FileContext>().toList();
+          return PreferenceList(
+            children: [
+              if (directories.isNotEmpty)
+                PreferenceListSection(
+                  title:
+                      Text('page_knowledge.pref_section_title_directory'.tr()),
+                  children: directories
+                      .map((e) => PreferenceListItem(
+                            disabled: true,
+                            title: Text(e.name),
+                            accessoryView: IconButton(
+                              icon: const Icon(
+                                FluentIcons.delete_20_regular,
+                                size: 20,
+                                color: Colors.red,
+                              ),
+                              onPressed: () {
+                                bloc.add(KnowledgeContextRemoved(e));
+                              },
+                            ),
+                          ))
+                      .toList(),
+                ),
+              if (files.isNotEmpty)
+                PreferenceListSection(
+                  title: Text('page_knowledge.pref_section_title_file'.tr()),
+                  children: files
+                      .map((e) => PreferenceListItem(
+                            disabled: true,
+                            title: Text(e.name),
+                            accessoryView: IconButton(
+                              icon: const Icon(
+                                FluentIcons.delete_20_regular,
+                                size: 20,
+                                color: Colors.red,
+                              ),
+                              onPressed: () {
+                                bloc.add(KnowledgeContextRemoved(e));
+                              },
+                            ),
+                          ))
+                      .toList(),
+                ),
+            ],
+          );
+        });
   }
 
   CustomAppBar _buildAppBar(BuildContext context) {
-    final appBloc = BlocProvider.of<AppBloc>(context);
+    final bloc = BlocProvider.of<KnowledgeBloc>(context);
     return CustomAppBar(
         title: Text('page_knowledge.title'.tr()),
         leading: CustomAppBarCloseButton(
@@ -201,7 +153,7 @@ class KnowledgeView extends StatelessWidget {
                   final name = p.basename(path);
                   final source = ContextSource.file(
                       canRead: true, canWrite: true, path: path, name: name);
-                  appBloc.add(ContextSourceAdded(source));
+                  bloc.add(KnowledgeContextAdded(source));
                 }
               } else if (value == 1) {
                 final files = await openFiles();
@@ -210,7 +162,7 @@ class KnowledgeView extends StatelessWidget {
                   final name = p.basename(path);
                   final source = ContextSource.file(
                       canRead: true, canWrite: true, path: path, name: name);
-                  appBloc.add(ContextSourceAdded(source));
+                  bloc.add(KnowledgeContextAdded(source));
                 }
               } else if (value == 2) {
                 final path = await getDirectoryPath();
@@ -218,7 +170,7 @@ class KnowledgeView extends StatelessWidget {
                   final name = p.basename(path);
                   final source = ContextSource.directory(
                       canRead: true, canWrite: true, path: path, name: name);
-                  appBloc.add(ContextSourceAdded(source));
+                  bloc.add(KnowledgeContextAdded(source));
                 }
               }
             },
@@ -227,6 +179,7 @@ class KnowledgeView extends StatelessWidget {
   }
 
   Widget _buildActionButton(BuildContext context) {
+    final bloc = BlocProvider.of<KnowledgeBloc>(context);
     final appBloc = BlocProvider.of<AppBloc>(context);
     final scaffoldManager = ScaffoldMessenger.of(context);
     return SpeedDial(
@@ -248,7 +201,7 @@ class KnowledgeView extends StatelessWidget {
               final name = p.basename(path);
               final source = ContextSource.file(
                   canRead: true, canWrite: true, path: path, name: name);
-              appBloc.add(ContextSourceAdded(source));
+              bloc.add(KnowledgeContextAdded(source));
             }
           },
         ),
@@ -265,7 +218,7 @@ class KnowledgeView extends StatelessWidget {
               final name = p.basename(path);
               final source = ContextSource.file(
                   canRead: true, canWrite: true, path: path, name: name);
-              appBloc.add(ContextSourceAdded(source));
+              bloc.add(KnowledgeContextAdded(source));
             }
           },
         ),
@@ -281,7 +234,7 @@ class KnowledgeView extends StatelessWidget {
               final name = p.basename(path);
               final source = ContextSource.directory(
                   canRead: true, canWrite: true, path: path, name: name);
-              appBloc.add(ContextSourceAdded(source));
+              bloc.add(KnowledgeContextAdded(source));
             }
           },
         ),

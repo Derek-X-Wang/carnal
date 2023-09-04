@@ -116,6 +116,9 @@ extension WindowManager on AppBloc {
     }
 
     if (kIsMacOS && isShowBelowTray) {
+      // TODO: sometime it get the wrong bounds
+      // in macos, the tray icon can be available in multiple displays
+      // it give the bounds of the tray icon in the primary display, even I click on another display
       Rect? trayIconBounds = await trayManager.getBounds();
       if (trayIconBounds != null) {
         Size trayIconSize = trayIconBounds.size;
@@ -125,6 +128,10 @@ extension WindowManager on AppBloc {
           trayIconPosition.dx - ((windowSize.width - trayIconSize.width) / 2),
           trayIconPosition.dy,
         );
+
+        // Display primaryDisplay = await screenRetriever.getPrimaryDisplay();
+        // List<Display> displays = await screenRetriever.getAllDisplays();
+        // final cursor = await screenRetriever.getCursorScreenPoint();
 
         if (!isAlwaysOnTop) {
           await windowManager.setPosition(newPosition);

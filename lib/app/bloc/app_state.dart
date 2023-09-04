@@ -10,24 +10,16 @@ enum AppStatus {
 @JsonSerializable(explicitToJson: true)
 class AppState extends Equatable {
   final ThemeMode themeMode = ThemeMode.system;
-  final List<WatcherItem> items;
-  final List<ContextSource> contextSources;
 
-  const AppState({
-    required this.items,
-    required this.contextSources,
-  });
+  const AppState();
 
   AppState copyWith(
       {List<WatcherItem>? items, List<ContextSource>? contextSources}) {
-    return AppState(
-      items: items ?? this.items,
-      contextSources: contextSources ?? this.contextSources,
-    );
+    return const AppState();
   }
 
   @override
-  List<Object> get props => [items, contextSources];
+  List<Object> get props => [];
 
   factory AppState.fromJson(Map<String, dynamic> json) =>
       _$AppStateFromJson(json);

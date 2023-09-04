@@ -4,7 +4,6 @@
 import 'dart:async';
 import 'package:agent_repository/agent_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:carnal/utils/context_source/context_source.dart';
 import 'package:carnal/utils/platform_util.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
@@ -30,29 +29,26 @@ class MessageItem {
 }
 
 class HomeState extends Equatable {
-  final List<ContextSource> sources;
   final List<MessageItem> messages;
   final String messageInput;
 
   const HomeState({
-    required this.sources,
     required this.messages,
     required this.messageInput,
   });
 
-  HomeState copyWith(
-      {List<ContextSource>? sources,
-      List<MessageItem>? messages,
-      String? messageInput}) {
+  HomeState copyWith({
+    List<MessageItem>? messages,
+    String? messageInput,
+  }) {
     return HomeState(
-      sources: sources ?? this.sources,
       messages: messages ?? this.messages,
       messageInput: messageInput ?? this.messageInput,
     );
   }
 
   @override
-  List<Object?> get props => [sources, messages, messageInput];
+  List<Object?> get props => [messages, messageInput];
 }
 
 abstract class HomeEvent extends Equatable {
@@ -105,12 +101,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     required AuthenticationRepository authenticationRepository,
     required ProfilesRepository profilesRepository,
     required AgentRepository agentRepository,
-    required List<ContextSource> sources,
   })  : _profilesRepository = profilesRepository,
         _authenticationRepository = authenticationRepository,
         _agentRepository = agentRepository,
-        super(
-            HomeState(sources: sources, messages: const [], messageInput: "")) {
+        super(const HomeState(messages: [], messageInput: "")) {
     on<HomeMessageInputChanged>(_mapMessageInputChanged);
     on<HomeMessageSent>(_onMessageSent);
     // Add listeners to the TextEditingControllers
@@ -157,7 +151,8 @@ extension HomeEvents on HomeBloc {
           dateTime: DateTime.now()));
       emit(state.copyWith(messages: messages2));
     } else {
-      final allowedPaths = state.sources
+      final sources = _profilesRepository.currentContextSources(user.id);
+      final allowedPaths = sources
           .expand<String>((e) => e.path != null ? [e.path!] : [])
           .toList();
       final res = await _agentRepository.execute(
@@ -199,12 +194,14 @@ extension Window on HomeBloc {
       const defaultMaxWindowHeight = 800.0;
       const defaultMaxWindowWidth = 400.0;
       try {
+        // TODO: dynamic height, sometime has overflow issue. I think it because some height is not calculated yet and return 0
         double newWindowHeight = toolbarViewHeight +
             bannersViewHeight +
             inputViewHeight +
             resultsViewHeight +
             messagesViewHeight +
             (kIsWindows ? 5 : 0);
+        // double newWindowHeight = 500.0;
         Size oldSize = await windowManager.getSize();
         Size newSize = Size(
           defaultMaxWindowWidth, //oldSize.width,

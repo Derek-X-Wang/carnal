@@ -8,11 +8,91 @@ part of 'profile.dart';
 
 _$_Profile _$$_ProfileFromJson(Map<String, dynamic> json) => _$_Profile(
       settings: Settings.fromJson(json['settings'] as Map<String, dynamic>),
+      sources: (json['sources'] as List<dynamic>)
+          .map((e) => ContextSource.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$$_ProfileToJson(_$_Profile instance) =>
     <String, dynamic>{
       'settings': instance.settings.toJson(),
+      'sources': instance.sources.map((e) => e.toJson()).toList(),
+    };
+
+_$DirectoryContext _$$DirectoryContextFromJson(Map<String, dynamic> json) =>
+    _$DirectoryContext(
+      canRead: json['canRead'] as bool,
+      canWrite: json['canWrite'] as bool,
+      path: json['path'] as String,
+      name: json['name'] as String,
+      content: json['content'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$DirectoryContextToJson(_$DirectoryContext instance) =>
+    <String, dynamic>{
+      'canRead': instance.canRead,
+      'canWrite': instance.canWrite,
+      'path': instance.path,
+      'name': instance.name,
+      'content': instance.content,
+      'runtimeType': instance.$type,
+    };
+
+_$FileContext _$$FileContextFromJson(Map<String, dynamic> json) =>
+    _$FileContext(
+      canRead: json['canRead'] as bool,
+      canWrite: json['canWrite'] as bool,
+      path: json['path'] as String,
+      name: json['name'] as String,
+      content: json['content'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$FileContextToJson(_$FileContext instance) =>
+    <String, dynamic>{
+      'canRead': instance.canRead,
+      'canWrite': instance.canWrite,
+      'path': instance.path,
+      'name': instance.name,
+      'content': instance.content,
+      'runtimeType': instance.$type,
+    };
+
+_$TextContext _$$TextContextFromJson(Map<String, dynamic> json) =>
+    _$TextContext(
+      canRead: json['canRead'] as bool,
+      content: json['content'] as String,
+      name: json['name'] as String,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$TextContextToJson(_$TextContext instance) =>
+    <String, dynamic>{
+      'canRead': instance.canRead,
+      'content': instance.content,
+      'name': instance.name,
+      'runtimeType': instance.$type,
+    };
+
+_$ScreenCaptureContext _$$ScreenCaptureContextFromJson(
+        Map<String, dynamic> json) =>
+    _$ScreenCaptureContext(
+      canRead: json['canRead'] as bool,
+      imagePath: json['imagePath'] as String,
+      name: json['name'] as String,
+      content: json['content'] as String?,
+      $type: json['runtimeType'] as String?,
+    );
+
+Map<String, dynamic> _$$ScreenCaptureContextToJson(
+        _$ScreenCaptureContext instance) =>
+    <String, dynamic>{
+      'canRead': instance.canRead,
+      'imagePath': instance.imagePath,
+      'name': instance.name,
+      'content': instance.content,
+      'runtimeType': instance.$type,
     };
 
 _$_Settings _$$_SettingsFromJson(Map<String, dynamic> json) => _$_Settings(

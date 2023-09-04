@@ -49,10 +49,11 @@ class LocalStorage {
   final BoxStorage _box;
 
   /// Reads a value from storage associated with the [key].
-  String? readString(String domainKey, String key) =>
-      _box.read('local/$domainKey/$key') as String?;
+  String? readString(String domainKey, String domainVersion, String key) =>
+      _box.read('local/$domainKey/$domainVersion/$key') as String?;
 
   /// Writes the [value] to storage associated with the [key].
-  Future<void> writeString(String domainKey, String key, String value) =>
-      _box.write('local/$domainKey/$key', value);
+  Future<void> writeString(
+          String domainKey, String domainVersion, String key, String value) =>
+      _box.write('local/$domainKey/$domainVersion/$key', value);
 }

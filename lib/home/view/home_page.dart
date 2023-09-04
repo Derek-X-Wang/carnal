@@ -1,14 +1,10 @@
 import 'package:agent_repository/agent_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:carnal/app/app.dart';
 import 'package:carnal/home/widgets/message_input_view.dart';
 import 'package:carnal/widgets/widgets.dart';
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:carnal/home/home.dart';
 import 'package:profiles_repository/profiles_repository.dart';
 
@@ -21,7 +17,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sources = context.select((AppBloc bloc) => bloc.state.contextSources);
     return Material(
       child: BlocProvider(
         create: (context) => HomeBloc(
@@ -30,7 +25,6 @@ class HomePage extends StatelessWidget {
           profilesRepository:
               RepositoryProvider.of<ProfilesRepository>(context),
           agentRepository: RepositoryProvider.of<AgentRepository>(context),
-          sources: sources,
         ),
         child: HomeView(),
       ),
@@ -66,7 +60,7 @@ class HomeView extends StatelessWidget {
     return SizedBox(
       key: bloc.messagesViewKey,
       width: double.infinity,
-      height: 200,
+      height: 370,
       child: BlocBuilder<HomeBloc, HomeState>(builder: (context, state) {
         return ListView.builder(
           controller: bloc.scrollController,

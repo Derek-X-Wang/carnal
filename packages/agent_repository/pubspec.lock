@@ -109,10 +109,10 @@ packages:
     dependency: transitive
     description:
       name: crypto
-      sha256: cf75650c66c0316274e21d7c43d3dea246273af5955bd94e8184837cd577575c
+      sha256: ff625774173754681d66daaf4a448684fb04b78f902da9cb3d308c19cc5e8bab
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.3"
   csslib:
     dependency: transitive
     description:
@@ -282,18 +282,18 @@ packages:
     dependency: "direct main"
     description:
       name: langchain
-      sha256: "243eb33599ce27a010650aecd925288eaf5e3705449c8ad5d09e383b806da99e"
+      sha256: "2a6061375fc239be7b32cb27776bd134bc5facb7f4c9e239925cc6550efb5bb7"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.7+1"
+    version: "0.0.11"
   langchain_openai:
     dependency: "direct main"
     description:
       name: langchain_openai
-      sha256: cce472c8bba4fabae11a2b800f78ccbeed45fd41b1ac7f3f9d349c24c0a15b4e
+      sha256: "430a259107fa6928eb9a3ff6cef78ad5e3ac58549a97d10a32ef2b78763d4a2f"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.7+1"
+    version: "0.0.11"
   logging:
     dependency: transitive
     description:

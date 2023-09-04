@@ -72,6 +72,8 @@ Enjoy using Carnal? Star the repo to show your support!
 - [ ] Refactor Globs matching logic for ignored files
 - [ ] Shift+Enter for new line when chatting
 - [ ] Imporve ui when the agent is thinking
-- [ ] macOS: Launch icons bigger than normal
+- [ ] macOS: App Icons bigger than normal
 - [ ] Doc loaders
 - [ ] Reduce the size of the app
+- [ ] UI: Avoid launch time resize
+- [ ] UI: Window show position is wired

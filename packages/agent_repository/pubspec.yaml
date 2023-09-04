@@ -9,8 +9,8 @@ environment:
 dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  langchain: ^0.0.7
-  langchain_openai: ^0.0.7
+  langchain: ^0.0.11
+  langchain_openai: ^0.0.11
   uuid: ^3.0.5
   flutter_dotenv: ^5.1.0
 
