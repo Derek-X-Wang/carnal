@@ -5,10 +5,7 @@ import 'dart:math';
 import 'package:authentication_repository/src/models/models.dart';
 import 'package:cache/cache.dart';
 import 'package:crypto/crypto.dart';
-// import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 /// Thrown if during the sign up process if a failure occurs.
 class SignUpFailure implements Exception {}
@@ -47,12 +44,9 @@ class AuthenticationRepository {
   /// {@macro authentication_repository}
   AuthenticationRepository({
     CacheClient? cache,
-    GoogleSignIn? googleSignIn,
-  })  : _cache = cache ?? CacheClient(),
-        _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
+  }) : _cache = cache ?? CacheClient();
 
   final CacheClient _cache;
-  final GoogleSignIn _googleSignIn;
 
   /// User cache key.
   /// Should only be used for testing purposes.

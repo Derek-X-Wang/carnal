@@ -59,6 +59,7 @@ This allows us to automatically generate the changelog and release notes.
 Carnal was inspired by the following projects:
 - [Kaguya](https://github.com/ykdojo/kaguya)
 - [Quivr](https://github.com/StanGirard/quivr)
+- [Biyi](https://github.com/biyidev/biyi)
 
 ## License
 Carnal is licensed under the MIT License. Feel free to contribute, modify, and share.
@@ -74,6 +75,5 @@ Enjoy using Carnal? Star the repo to show your support!
 - [ ] Imporve ui when the agent is thinking
 - [ ] macOS: App Icons bigger than normal
 - [ ] Doc loaders
-- [ ] Reduce the size of the app
 - [ ] UI: Avoid launch time resize
 - [ ] UI: Window show position is wired

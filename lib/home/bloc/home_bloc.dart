@@ -130,6 +130,7 @@ extension HomeEvents on HomeBloc {
       HomeMessageSent event, Emitter<HomeState> emit) async {
     final messages = List<MessageItem>.from(state.messages);
     final messageInput = state.messageInput.trim();
+    editingController.clear();
     messages.addAll([
       MessageItem(
           kind: UserKind.user, message: messageInput, dateTime: DateTime.now()),

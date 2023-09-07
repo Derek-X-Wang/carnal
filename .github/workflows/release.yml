@@ -21,6 +21,7 @@ jobs:
             target: macOS
             build_target: macos
             release_directory: build/macos/Build/Products/Release
+            package_format: dmg
           # - os: windows-latest
           #   target: Windows
           #   build_target: windows
@@ -73,8 +74,17 @@ jobs:
 
       - name: Build artifacts
         run: flutter build ${{ matrix.build_target }} --release
+      
+      # appdmg: The 'openfolder' is not supported on Apple Silicon devices.
+      # https://github.com/LinusU/node-appdmg/issues/218
+      - name: Package Release macos
+        if: matrix.target == 'macOS'
+        run: |
+          npm install -g appdmg
+          appdmg appdmg.json ${{ matrix.release_directory }}/carnal-${{ steps.version.outputs.version-number }}-${{ matrix.build_target }}.dmg
 
       - name: Package Release files
+        if: matrix.target != 'macOS'
         uses: thedoctor0/zip-release@master
         with:
           type: "zip"
@@ -89,5 +99,5 @@ jobs:
           name: v${{ steps.version.outputs.version-number }}
           tag_name: ${{ steps.version.outputs.version-number }}
           generate_release_notes: true
-          files: ${{ matrix.release_directory }}/carnal-${{ steps.version.outputs.version-number }}-${{ matrix.build_target }}.zip
+          files: ${{ matrix.release_directory }}/carnal-${{ steps.version.outputs.version-number }}-${{ matrix.build_target }}.${{ matrix.package_format }}
     
