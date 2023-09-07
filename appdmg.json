@@ -1,11 +1,11 @@
 {
   "title": "Carnal",
-  "icon": "assets/appdmg/icon-192.png",
+  "icon": "assets/appdmg/icon-192.icns",
   "background": "assets/appdmg/background.png",
   "window": {
     "size": {
       "width": 640,
-      "height": 188
+      "height": 230
     }
   },
   "contents": [
