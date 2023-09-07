@@ -21,6 +21,7 @@ jobs:
             target: macOS
             build_target: macos
             release_directory: build/macos/Build/Products/Release
+            release_app: build/macos/Build/Products/Release/Carnal.app
             package_format: dmg
           # - os: windows-latest
           #   target: Windows
@@ -80,6 +81,7 @@ jobs:
       - name: Package Release macos
         if: matrix.target == 'macOS'
         run: |
+          du -sh ${{ matrix.release_app }}
           npm install -g appdmg
           appdmg appdmg.json ${{ matrix.release_directory }}/carnal-${{ steps.version.outputs.version-number }}-${{ matrix.build_target }}.dmg
 

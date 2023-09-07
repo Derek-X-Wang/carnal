@@ -1,4 +1,4 @@
-.PHONY: all run_dev_web run_dev_mobile run_unit clean upgrade lint format build_dev_mobile help watch build gen run_stg_mobile run_prd_mobile build_apk_dev build_apk_stg build_apk_prd purge 
+.PHONY: all run_dev_web run_dev_mobile run_unit clean upgrade lint format build_dev_mobile help watch build gen run_stg_mobile run_prd_mobile build_apk_dev build_apk_stg build_apk_prd purge shortcut_push
 
 all: lint format run_dev_mobile
 
@@ -56,6 +56,18 @@ commit: format lint run_unit
 	@echo "╠ Committing..."
 	git add .
 	git commit
+
+shortcut_push:
+	@echo "╠ Shortcut pushing..."
+	git checkout develop
+	git push
+	git checkout main
+	git merge develop
+	git push
+	git checkout release
+	git merge main
+	git push
+	git checkout develop
 
 run_dev_web: ## Runs the web application in dev
 	@echo "╠ Running the app"
